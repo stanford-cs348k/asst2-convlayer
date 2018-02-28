@@ -18,7 +18,7 @@ Implementing the layers correctly is easy. The challenge is to implementing them
 * Details on the batchnorm layer:
   - https://leonardoaraujosantos.gitbooks.io/artificial-inteligence/content/batch_norm_layer.html
   - https://r2rt.com/implementing-batch-normalization-in-tensorflow.html
-* [ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)
+* [ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks))
 * [TensorFlow-Slim documentation](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/slim). In case you choose to compare your implementation to a TensorFlow version, we encourage use of *TensorFlow-Slim* which is easier to get off the ground with than TensorFlow proper.
 
 # Going further #
@@ -28,7 +28,7 @@ To really see how good your implementation is, we encourage you to compare your 
 
 Grab the assignment starter code.
 
-    git clone < TODO: list repo >
+    git clone git@github.com:stanford-cs348v/asst3.git
 
 To run the assignment, you will need to download the scene datasets, located at http://graphics.stanford.edu/courses/cs348v-18-winter/asst/asst2/data.tar.
 
