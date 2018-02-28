@@ -124,4 +124,6 @@ Your modifications to the code should only go in files `fast_convolution_layer.h
     
     // END: CS348V STUDENTS MODIFY THIS CODE
 
+If you need to make changes to the build system (e.g. add g++ flags to get vector intrinsics working) _please make a note of it in your submission_.
+
 We have provided two reference implementations in `simple_convolution_layer.cpp` and `halide_convolution_layer.cpp`. You can use any of the code in these files for your implementation. In particular, you can (a) copy and paste the native C++ implementation as a starting point if you choose to go the native C++ route, and (b) copy the Halide algorithm (and just provide a custom schedule) if you choose to go the Halide route.
