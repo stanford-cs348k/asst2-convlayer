@@ -17,15 +17,17 @@ void HalideConvolutionLayer::Run(Parameters params, Data data) {
                               params.width + 2,
                               params.height + 2,
                               params.channels);
-  Halide::Func tmp;
-  Halide::Var x, y, c;
+  Halide::Func tmp("tmp");
+  Halide::Var x("x");
+  Halide::Var y("y");
+  Halide::Var c("c");
   // (1) Depthwise convolution. Note that the spatial kernel is centered
   // around the output pixel, so we need an offset.
   {
     Halide::Buffer<float> w(
         data.depthwise_weights, params.k, params.k, params.channels);
     const int offset = params.k / 2;
-    Halide::RDom r(0, params.k, 0, params.k);
+    Halide::RDom r(0, params.k, 0, params.k, "depthwise_rdom");
     tmp(x, y, c) = 0.f;
     tmp(x, y, c) +=
         input(x + r.x - offset, y + r.y - offset, c) * w(r.x, r.y, c);
@@ -44,10 +46,10 @@ void HalideConvolutionLayer::Run(Parameters params, Data data) {
   // (3) ReLU.
   tmp(x, y, c) = Halide::max(tmp(x, y, c), 0.f);
   // (4) Pointwise convolution.
-  Halide::Func output;
+  Halide::Func output("output");
   {
     Halide::Buffer<float> w(data.pointwise_weights, params.f, params.channels);
-    Halide::RDom r(0, params.f);
+    Halide::RDom r(0, params.f, "pointwise_rdom");
     output(x, y, c) = 0.f;
     output(x, y, c) += tmp(x, y, r.x) * w(c, r.x);
   }
@@ -64,6 +66,12 @@ void HalideConvolutionLayer::Run(Parameters params, Data data) {
   }
   // (6) ReLU.
   output(x, y, c) = Halide::max(output(x, y, c), 0.f);
+
+  // Print the description of the Halide schedule (basically pseudo-code for the
+  // loop ordering).
+  printf("Pseudo-code for the schedule:\n");
+  output.print_loop_nest();
+  printf("\n");
 
   // Realize output buffer and copy to data.output pointer.
   Halide::Buffer<float> output_buffer(params.width, params.height, params.f);

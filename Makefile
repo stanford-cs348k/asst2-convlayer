@@ -19,4 +19,4 @@ clean:
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
-	g++ $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+	g++ $(CPPFLAGS) $(CXXFLAGS) $(DEFINES) $(INCLUDES) -c -o $@ $<

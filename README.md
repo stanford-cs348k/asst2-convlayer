@@ -10,7 +10,48 @@ The MobileNets DNN architecture was designed with performance in mind, and a maj
 Here `BN` stands for a batchnorm layer and `ReLU` is a rectified linear unit (see below for details).
 
 #  What is the challenge? #
-Implementing the layers correctly is easy. The challenge is to implementing them efficiently using many of the techniques described in class, such as SIMD vector processing, multi-core execution, and efficient blocking for cache locality. To make these techniques simpler, we encourage you to attempt an implementation in Halide. If you do so, you need to write both the algorithm in Halide, as well as tune performance by writing an efficient Halide schedule. You can use the provided Halide code for syntax reference, but you must write the algorithm yourself.
+Implementing the layers correctly is easy. The challenge is to implementing them efficiently using many of the techniques described in class, such as SIMD vector processing, multi-core execution, and efficient blocking for cache locality. To make these techniques simpler, we encourage you to attempt an implementation in Halide. **You are allowed to use the reference Halide algorithm provided in the codebase verbatim**. However, to improve the performance you will need to write an efficient Halide schedule. The starter code uses a naive/default Halide schedule, which has loops that look like:
+
+    produce output:
+      for c:
+        for y:
+          for x:
+            output(...) = ...
+      for c:
+        for y:
+          for x:
+            for pointwise_rdom:
+              produce tmp:
+                for c:
+                  for y:
+                    for x:
+                      tmp(...) = ...
+                for c:
+                  for y:
+                    for x:
+                      for depthwise_rdom:
+                        for depthwise_rdom:
+                          tmp(...) = ...
+                for c:
+                  for y:
+                    for x:
+                      tmp(...) = ...
+                for c:
+                  for y:
+                    for x:
+                      tmp(...) = ...
+              consume tmp:
+                output(...) = ...
+      for c:
+        for y:
+          for x:
+            output(...) = ...
+      for c:
+        for y:
+          for x:
+            output(...) = ...
+
+Your job then would be to write a custom Halide schedule that performs better than the default. (See [`Halide::Func::print_loop_nest()`](http://halide-lang.org/docs/class_halide_1_1_func.html#a365488c2eaf769c61635120773e541e1) to inspect and debug your schedule like this.)
 
 # Resources and documentation #
 * [Halide tutorials](http://halide-lang.org/tutorials/tutorial_introduction.html). In particular, see Tutorial 01 for a basic introduction, Tutorial 07 for a convolution example, and Tutorial 05 for an introduction to Halide schedules, and Tutorial 08 for more advanced scheduling topics.
@@ -22,7 +63,7 @@ Implementing the layers correctly is easy. The challenge is to implementing them
 * [TensorFlow-Slim documentation](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/slim). In case you choose to compare your implementation to a TensorFlow version, we encourage use of *TensorFlow-Slim* which is easier to get off the ground with than TensorFlow proper.
 
 # Going further #
-To really see how good your implementation is, we encourage you to compare your performance against that of popular DNN frameworks like TensorFlow or MX.net. Since the algorithm for this assignment is fixed, you can even write an implementation in hand-tuned native C++ code (using AVX2 intrinsics and threading primitives).
+To really see how good your implementation is, we encourage you to compare your performance against that of popular DNN frameworks like TensorFlow or MX.net. Since the algorithm for this assignment is fixed, you can even write an implementation in hand-tuned native C++ code (using AVX2 intrinsics and threading primitives). **Again, you are allowed to use the provided native C++ implementation verbatim**, but you should modify it to improve the performance.
 
 # Assignment mechanics #
 
@@ -30,7 +71,7 @@ Grab the assignment starter code.
 
     git clone git@github.com:stanford-cs348v/asst3.git
 
-To run the assignment, you will need to download the scene datasets, located at http://graphics.stanford.edu/courses/cs348v-18-winter/asst/asst2/data.tar.
+To run the assignment, you will need to download the scene datasets, located at http://graphics.stanford.edu/courses/cs348v-18-winter/asst/asst3/data.tar.
 
 __Build Instructions__
 
@@ -78,4 +119,4 @@ Your modifications to the code should only go in files `fast_convolution_layer.h
     
     // END: CS348V STUDENTS MODIFY THIS CODE
 
-We have provided two reference implementations in `simple_convolution_layer.cpp` and `halide_convolution_layer.cpp`. You can use these references to answer any questions about how algorithms involved in the layer, or for Halide syntax, but your implementation must be your own code.
+We have provided two reference implementations in `simple_convolution_layer.cpp` and `halide_convolution_layer.cpp`. You can use any of the code in these files for your implementation. In particular, you can (a) copy and paste the native C++ implementation as a starting point if you choose to go the native C++ route, and (b) copy the Halide algorithm (and just provide a custom schedule) if you choose to go the Halide route.
