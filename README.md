@@ -1,5 +1,10 @@
 # CS348V Assignment 3: Fast MobileNet Conv Layer evaluation #
 
+__Due: Fri Mar 16th, 11:59pm__
+
+__Note that this is an optional assignment, and can be used to add extra credit to your other assignments or final project__
+
+
 In this assignment you will implement a simplified version of the MobileNet CNN. In particular, this assignment is restricted to the evaluation of a single convolutional layer of the network. See https://arxiv.org/abs/1704.04861 for more details about the full network. Also, unlike Assignment 2, this assignemnt is focused on efficiency. Your code will be evaluated on how fast it runs.
 
 # Why speedup MobileNets? #
