@@ -12,7 +12,7 @@ CXXFLAGS := -std=c++11 -g
 
 convlayer: $(OBJ_FILES)
 	@mkdir -p $(BIN_DIR)
-	g++ $(LDFLAGS) -o $(BIN_DIR)/$@ $^
+	g++ $^ $(LDFLAGS) -o $(BIN_DIR)/$@
 
 clean:
 	\rm -rf $(BUILD_DIR) $(BIN_DIR)
