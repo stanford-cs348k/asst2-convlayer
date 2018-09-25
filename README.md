@@ -72,7 +72,7 @@ To really see how good your implementation is, we encourage you to compare your 
 
 Grab the assignment starter code.
 
-    git clone git@github.com:stanford-cs348v/asst2.git
+    git clone git@github.com:stanford-cs348k/asst2-mobilenet.git
 
 To run the assignment, you will need to download the scene datasets, which you can get from the course staff upon request.
 
