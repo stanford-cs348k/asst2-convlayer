@@ -1,8 +1,6 @@
-# CS348V Assignment 3: Fast MobileNet Conv Layer evaluation #
+# CS348V Optional Assignment 2: Fast MobileNet Conv Layer evaluation #
 
-__Due: Fri Mar 16th, 11:59pm__
-
-__Note that this is an optional assignment, and can be used to add extra credit to your other assignments or final project__
+__Note that this is an optional assignment, and can be used to add extra credit to your other assignments or final project.__
 
 
 In this assignment you will implement a simplified version of the MobileNet CNN. In particular, this assignment is restricted to the evaluation of a single convolutional layer of the network. See https://arxiv.org/abs/1704.04861 for more details about the full network. Also, unlike Assignment 2, this assignemnt is focused on efficiency. Your code will be evaluated on how fast it runs.
@@ -74,9 +72,9 @@ To really see how good your implementation is, we encourage you to compare your 
 
 Grab the assignment starter code.
 
-    git clone git@github.com:stanford-cs348v/asst3.git
+    git clone git@github.com:stanford-cs348v/asst2.git
 
-To run the assignment, you will need to download the scene datasets, located at http://graphics.stanford.edu/courses/cs348v-18-winter/asst/asst3/data.tar.
+To run the assignment, you will need to download the scene datasets, which you can get from the course staff upon request.
 
 __Build Instructions__
 
@@ -120,9 +118,9 @@ __Modifying the code__
 
 Your modifications to the code should only go in files `fast_convolution_layer.hpp` and `fast_convolution_layer.cpp`, in the regions marked
 
-    // BEGIN: CS348V STUDENTS MODIFY THIS CODE
+    // BEGIN: CS348K STUDENTS MODIFY THIS CODE
     
-    // END: CS348V STUDENTS MODIFY THIS CODE
+    // END: CS348K STUDENTS MODIFY THIS CODE
 
 If you need to make changes to the build system (e.g. add g++ flags to get vector intrinsics working) _please make a note of it in your submission_.
 
