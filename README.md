@@ -1,4 +1,4 @@
-# CS348V Optional Assignment 2: Fast MobileNet Conv Layer evaluation #
+# CS348K Optional Assignment 2: Efficient MobileNet Conv Layer Evaluation #
 
 __Note that this is an optional assignment, and can be used to add extra credit to your other assignments or final project.__
 
