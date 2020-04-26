@@ -9,6 +9,8 @@
 #include "convolution_layer.hpp"
 #include "fast_convolution_layer.hpp"
 
+using namespace std;
+
 //bool ReadData(std::string activations_filename,
               //std::string weights_filename,
               //ConvolutionLayer::Parameters* params,
@@ -171,56 +173,46 @@
 //}
 
 void FillRandom(float* buf, const int size) {
-
+  buf = new float[size];
+  for (int i = 0; i < size; i++) {
+    buf[i] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    //cout << "rand = " << buf[i] << endl;
+  }
 }
 
 int main(int argc, char** argv) {
-  //// Parse command line arguments.
-  //if (argc < 5) {
-    //std::cout << "usage: " << argv[0]
-              //<< " activations weights golden num_runs" << std::endl;
-    //return 0;
-  //}
-  //const std::string activations_filename = argv[1];
-  //const std::string weights_filename = argv[2];
-  //const std::string golden_filename = argv[3];
-  //const int num_runs = atoi(argv[4]);
-
   ConvolutionLayer::Parameters params;
+  params.num_f = 32;
+  params.f_w = 8;
+  params.f_h = 14;
+  params.channels = 64;
+  params.width = 32;
+  params.height = 32;
+  params.n = 7;
+  params.pad = 2;
+
   ConvolutionLayer::Data data;
 
   FillRandom(data.biases, params.num_f);
   FillRandom(data.weights, params.f_h*params.f_w*params.channels*params.num_f);
   FillRandom(data.input, params.width*params.height*params.channels);
-
-  //std::string err;
-  //if (not ReadData(
-          //activations_filename, weights_filename, &params, &data, &err)) {
-    //std::cout << "Error reading in data: " << err << std::endl;
-    //return 0;
-  //}
+  FillRandom(data.output, params.width*params.height*params.channels);
 
   std::unique_ptr<ConvolutionLayer> conv_layer(new FastConvolutionLayer);
   conv_layer->Init(params);
 
-  // Run convolution layer implementation for num_runs which is specified on the
-  // command line.
   double total_elapsed = 0.;
-  //for (int run = 0; run < num_runs; run++) {
-    auto start = std::chrono::system_clock::now();
-    conv_layer->Run(params, data);
-    auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed = end - start;
-    total_elapsed += elapsed.count();
-    std::cout << "Convolution layer took " << elapsed.count()
-              << " secconds" << std::endl;
-    // Verify against golden.
-    //const int output_size = params.width * params.height * params.f;
-    //Verify(golden_filename, data.output, output_size);
-  //}
-  //const double average_elapsed = total_elapsed / (double)num_runs;
-  //std::cout << "Average time: " << average_elapsed << "s" << std::endl;
+  auto start = std::chrono::system_clock::now();
+  conv_layer->Run(params, data);
+  auto end = std::chrono::system_clock::now();
+  std::chrono::duration<double> elapsed = end - start;
+  total_elapsed += elapsed.count();
+  std::cout << "Convolution layer took " << elapsed.count() << " secconds" << std::endl;
 
+  delete data.input;
+  delete data.output;
+  delete data.biases;
+  delete data.weights;
 
   return 0;
 }
