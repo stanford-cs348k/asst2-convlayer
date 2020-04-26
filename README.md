@@ -1,7 +1,4 @@
-# CS348K Optional Assignment 2: Efficient MobileNet Conv Layer Evaluation #
-
-__Note that this is an optional assignment, and can be used to add extra credit to your other assignments or final project.__
-
+# CS348K Assignment 2: Efficient MobileNet Conv Layer Evaluation #
 
 In this assignment you will implement a layer of a CNN. In particular, this assignment is restricted to the evaluation of a single convolutional layer of the network. See https://arxiv.org/abs/1704.04861 for more details about the full network. Also, unlike the camera RAW assignment, this assignemnt is focused on efficiency. Your code will be evaluated on how fast it runs.
 
