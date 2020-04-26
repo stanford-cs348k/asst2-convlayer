@@ -44,7 +44,8 @@ void HalideConvolutionLayer::Run(Parameters params, Data data) {
         for (int j = 0; j < params.height; j++) {
           for (int i = 0; i < params.width; i++) {
             std::cout << "index = " << index << std::endl;
-            data.output[index++] = output_buffer(i, j, c, n);
+            std::cout << output_buffer(i, j, c, n);
+            //data.output[index++] = output_buffer(i, j, c, n);
           }
         }
       }

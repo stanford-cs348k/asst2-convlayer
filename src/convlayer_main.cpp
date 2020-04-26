@@ -173,11 +173,12 @@ using namespace std;
   //fclose(f);
 //}
 
-void FillRandom(float* buf, const int size) {
-  buf = new float[size];
+float* FillRandom(const int size) {
+  auto buf = new float[size];
   for (int i = 0; i < size; i++) {
     buf[i] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
   }
+  return buf;
 }
 
 int main(int argc, char** argv) {
@@ -193,10 +194,10 @@ int main(int argc, char** argv) {
 
   ConvolutionLayer::Data data;
 
-  FillRandom(data.biases, params.num_f);
-  FillRandom(data.weights, params.f_h*params.f_w*params.channels*params.num_f);
-  FillRandom(data.input, params.width*params.height*params.channels*params.n);
-  FillRandom(data.output, params.width*params.height*params.n*params.num_f);
+  data.biases = FillRandom(params.num_f);
+  data.weights = FillRandom(params.f_h*params.f_w*params.channels*params.num_f);
+  data.input = FillRandom(params.width*params.height*params.channels*params.n);
+  data.output = FillRandom(params.width*params.height*params.n*params.num_f);
 
   //std::unique_ptr<ConvolutionLayer> conv_layer(new FastConvolutionLayer);
   std::unique_ptr<ConvolutionLayer> conv_layer(new HalideConvolutionLayer);
