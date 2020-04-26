@@ -13,7 +13,8 @@ void HalideConvolutionLayer::Run(Parameters params, Data data) {
   Halide::Buffer<float> in_func(data.input,
                               params.width,
                               params.height,
-                              params.channels);
+                              params.channels,
+                              params.n);
 
   Halide::Buffer<float> b(data.biases, params.num_f);
   Halide::Buffer<float> W(data.weights, params.f_w, params.f_h, params.channels, params.num_f);
@@ -22,7 +23,7 @@ void HalideConvolutionLayer::Run(Parameters params, Data data) {
   Halide::Var x("x"), y("y"), z("z"), n("n");
 
   Halide::Func f_in_bound;
-  f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, 0, params.width, 0, params.height, 0, params.channels);
+  f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, 0, params.width, 0, params.height, 0, params.channels, 0, params.n);
 
   Halide::RDom r(0, params.f_w, 0, params.f_h, 0, params.channels);
 
@@ -42,6 +43,7 @@ void HalideConvolutionLayer::Run(Parameters params, Data data) {
       for (int c = 0; c < params.num_f; c++) {
         for (int j = 0; j < params.height; j++) {
           for (int i = 0; i < params.width; i++) {
+            std::cout << "index = " << index << std::endl;
             data.output[index++] = output_buffer(i, j, c, n);
           }
         }

@@ -195,7 +195,7 @@ int main(int argc, char** argv) {
 
   FillRandom(data.biases, params.num_f);
   FillRandom(data.weights, params.f_h*params.f_w*params.channels*params.num_f);
-  FillRandom(data.input, params.width*params.height*params.channels);
+  FillRandom(data.input, params.width*params.height*params.channels*params.n);
   FillRandom(data.output, params.width*params.height*params.n*params.num_f);
 
   //std::unique_ptr<ConvolutionLayer> conv_layer(new FastConvolutionLayer);
