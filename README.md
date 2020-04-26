@@ -10,7 +10,7 @@ The MobileNets DNN architecture was designed with performance in mind, and a maj
 Here `BN` stands for a batchnorm layer and `ReLU` is a rectified linear unit (see below for details).
 
 #  What is the challenge? #
-Implementing the layers correctly is easy. The challenge is to implementing them efficiently using many of the techniques described in class, such as SIMD vector processing, multi-core execution, and efficient blocking for cache locality. To make these techniques simpler, you will implement the assignment in Halide. **You are allowed to use the reference Halide algorithm provided in the codebase verbatim**. However, to improve the performance you will need to write an efficient Halide schedule. The starter code uses a naive/default Halide schedule, which has loops that look like:
+Implementing the layers correctly is easy. The challenge is implementing them efficiently using many of the techniques described in class, such as SIMD vector processing, multi-core execution, and efficient blocking for cache locality. To make these techniques simpler, you will implement the assignment in Halide. **You are allowed to use the reference Halide algorithm provided in the codebase verbatim**. However, to improve the performance you will need to write an efficient Halide schedule. The starter code uses a naive/default Halide schedule, which has loops that look like:
 
 ```
   // Initialization
