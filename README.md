@@ -24,9 +24,9 @@ Implementing the layers correctly is easy. The challenge is to implementing them
     for z:
       for y:
         for x:
-          for r12:
-            for r12:
-              for r12:
+          for r0:
+            for r1:
+              for r2:
                 conv(...) = ...
 ```
 
