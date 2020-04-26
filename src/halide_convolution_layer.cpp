@@ -10,6 +10,7 @@ void HalideConvolutionLayer::Init(Parameters params) {
 }
 
 void HalideConvolutionLayer::Run(Parameters params, Data data) {
+
   Halide::Buffer<float> in_func(data.input,
                               params.width,
                               params.height,
@@ -43,9 +44,7 @@ void HalideConvolutionLayer::Run(Parameters params, Data data) {
       for (int c = 0; c < params.num_f; c++) {
         for (int j = 0; j < params.height; j++) {
           for (int i = 0; i < params.width; i++) {
-            std::cout << "index = " << index << std::endl;
-            std::cout << output_buffer(i, j, c, n);
-            //data.output[index++] = output_buffer(i, j, c, n);
+            data.output[index++] = output_buffer(i, j, c, n);
           }
         }
       }
