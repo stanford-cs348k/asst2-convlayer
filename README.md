@@ -11,45 +11,19 @@ Here `BN` stands for a batchnorm layer and `ReLU` is a rectified linear unit (se
 
 #  What is the challenge? #
 Implementing the layers correctly is easy. The challenge is to implementing them efficiently using many of the techniques described in class, such as SIMD vector processing, multi-core execution, and efficient blocking for cache locality. To make these techniques simpler, you will implement the assignment in Halide. **You are allowed to use the reference Halide algorithm provided in the codebase verbatim**. However, to improve the performance you will need to write an efficient Halide schedule. The starter code uses a naive/default Halide schedule, which has loops that look like:
-
-    produce output:
-      for c:
-        for y:
-          for x:
-            output(...) = ...
-      for c:
-        for y:
-          for x:
-            for pointwise_rdom:
-              produce tmp:
-                for c:
-                  for y:
-                    for x:
-                      tmp(...) = ...
-                for c:
-                  for y:
-                    for x:
-                      for depthwise_rdom:
-                        for depthwise_rdom:
-                          tmp(...) = ...
-                for c:
-                  for y:
-                    for x:
-                      tmp(...) = ...
-                for c:
-                  for y:
-                    for x:
-                      tmp(...) = ...
-              consume tmp:
-                output(...) = ...
-      for c:
-        for y:
-          for x:
-            output(...) = ...
-      for c:
-        for y:
-          for x:
-            output(...) = ...
+  for n:
+    for z:
+      for y:
+        for x:
+          conv(...) = ...
+  for n:
+    for z:
+      for y:
+        for x:
+          for r12 in [0, 63]:
+            for r12 in [0, 13]:
+              for r12 in [0, 7]:
+                conv(...) = ...
 
 Your job then would be to write a custom Halide schedule that performs better than the default. (See [`Halide::Func::print_loop_nest()`](http://halide-lang.org/docs/class_halide_1_1_func.html#a365488c2eaf769c61635120773e541e1) to inspect and debug your schedule like this.)
 

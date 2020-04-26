@@ -32,6 +32,9 @@ void HalideConvolutionLayer::Run(Parameters params, Data data) {
   forward(x, y, z, n) += W(r.x, r.y, r.z, z) *
     f_in_bound(x + r.x - params.pad, y + r.y - params.pad, r.z, n);
 
+  std::cout << "Loop nests..." << std::endl;
+  forward.print_loop_nest();
+
   // Realize output buffer and copy to data.output pointer.
   Halide::Buffer<float> output_buffer(params.width, params.height, params.num_f, params.n);
   forward.realize(output_buffer);
