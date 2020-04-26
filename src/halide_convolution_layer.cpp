@@ -4,15 +4,12 @@
 #include <cstring>
 #include <iostream>
 
-#ifdef USE_HALIDE
 #include "Halide.h"
-#endif  // USE_HALIDE
 
 void HalideConvolutionLayer::Init(Parameters params) {
 }
 
 void HalideConvolutionLayer::Run(Parameters params, Data data) {
-#ifdef USE_HALIDE
   Halide::Buffer<float> input(data.input,
                               params.width + 2,
                               params.height + 2,
@@ -90,5 +87,4 @@ void HalideConvolutionLayer::Run(Parameters params, Data data) {
       }
     }
   }
-#endif  // USE_HALIDE
 }

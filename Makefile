@@ -1,5 +1,5 @@
 SRC_DIR := src
-HALIDE_DIR=/Users/setaluri/halide
+HALIDE_DIR=/Users/dillon/CppWorkspace/Halide/
 BUILD_DIR := build
 BIN_DIR := bin
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
@@ -10,13 +10,15 @@ LDFLAGS := -L$(HALIDE_DIR)/bin -lHalide -ldl -lpthread
 CPPFLAGS :=
 CXXFLAGS := -std=c++11 -g
 
+CXX ?= g++
+
 convlayer: $(OBJ_FILES)
 	@mkdir -p $(BIN_DIR)
-	g++ $^ $(LDFLAGS) -o $(BIN_DIR)/$@
+	$(CXX) $^ $(LDFLAGS) -o $(BIN_DIR)/$@
 
 clean:
 	\rm -rf $(BUILD_DIR) $(BIN_DIR)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
-	g++ $(CPPFLAGS) $(CXXFLAGS) $(DEFINES) $(INCLUDES) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEFINES) $(INCLUDES) -c -o $@ $<
