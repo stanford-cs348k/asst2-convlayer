@@ -25,8 +25,8 @@ class ConvolutionLayer {
     int f_h = 0;
     int f_w = 0;
 
-    int in_w = 0;
-    int in_h = 0;
+    //int in_w = 0;
+    //int in_h = 0;
 
     int pad = 0;
   };
