@@ -7,6 +7,7 @@
 #include <memory>
 #include <vector>
 #include "convolution_layer.hpp"
+#include "halide_convolution_layer.hpp"
 #include "fast_convolution_layer.hpp"
 
 using namespace std;
@@ -176,7 +177,6 @@ void FillRandom(float* buf, const int size) {
   buf = new float[size];
   for (int i = 0; i < size; i++) {
     buf[i] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-    //cout << "rand = " << buf[i] << endl;
   }
 }
 
@@ -196,9 +196,10 @@ int main(int argc, char** argv) {
   FillRandom(data.biases, params.num_f);
   FillRandom(data.weights, params.f_h*params.f_w*params.channels*params.num_f);
   FillRandom(data.input, params.width*params.height*params.channels);
-  FillRandom(data.output, params.width*params.height*params.channels);
+  FillRandom(data.output, params.width*params.height*params.n*params.num_f);
 
-  std::unique_ptr<ConvolutionLayer> conv_layer(new FastConvolutionLayer);
+  //std::unique_ptr<ConvolutionLayer> conv_layer(new FastConvolutionLayer);
+  std::unique_ptr<ConvolutionLayer> conv_layer(new HalideConvolutionLayer);
   conv_layer->Init(params);
 
   double total_elapsed = 0.;
@@ -208,6 +209,11 @@ int main(int argc, char** argv) {
   std::chrono::duration<double> elapsed = end - start;
   total_elapsed += elapsed.count();
   std::cout << "Convolution layer took " << elapsed.count() << " secconds" << std::endl;
+  cout << "Output..." << endl;
+  int out_size = params.width*params.height*params.num_f*params.n;
+  for (int i = 0; i < out_size; i++) {
+    cout << "  " << data.output[i] << endl;
+  }
 
   delete data.input;
   delete data.output;
