@@ -8,6 +8,8 @@ class ConvolutionLayer {
   // layer. See struct Parameters below to see "hyperparameters" which are
   // referred to in this struct.
   struct Data {
+    float* biases = nullptr;
+    float* weights = nullptr;
     // Input activiations. Size (width + 2) * (height + 2) * channels. The '+ 2'
     // in each dimension comes from the fact that the input activations are
     // padded to make the depthwise convolution easier. Accessing input(0, 0, c)
@@ -41,6 +43,12 @@ class ConvolutionLayer {
     // Support of the depthwise convolution kernel (note that it is square,
     // i.e. k * k, in the spatial dimensions).
     int k = 0;
+    int num_f = 0;
+    int in_w = 0;
+    int in_h = 0;
+    int pad = 0;
+    int f_h = 0;
+    int f_w = 0;
     // Support of the pointwise convolution kernel. This determines the output
     // size.
     int f = 0;
