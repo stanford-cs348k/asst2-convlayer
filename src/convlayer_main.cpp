@@ -169,7 +169,7 @@ int main(int argc, char** argv) {
         min_time = total_elapsed;
       }
     }
-    std::cout << "Reference Convolution layer took " << min_time << " secconds" << std::endl;
+    std::cout << "Default schedule convolution layer: " << min_time << " seconds" << std::endl;
   } else if (schedule == "student") {
     std::unique_ptr<ConvolutionLayer> fast_conv_layer(new FastConvolutionLayer);
     fast_conv_layer->Init(params);
@@ -188,7 +188,7 @@ int main(int argc, char** argv) {
       }
     }
 
-    std::cout << "Fast Convolution layer took " << min_time << " secconds" << std::endl;
+    std::cout << "Student schedule convolution layer: " << min_time << " seconds" << std::endl;
   } else if (schedule == "auto") {
     std::unique_ptr<ConvolutionLayer> auto_conv_layer(new AutoConvolutionLayer);
     auto_conv_layer->Init(params);
@@ -207,7 +207,7 @@ int main(int argc, char** argv) {
       }
     }
 
-    std::cout << "Auto Convolution layer took " << min_time << " secconds" << std::endl;
+    std::cout << "Auto-scheduler convolution layer:" << min_time << " seconds" << std::endl;
   } else {
     cout << "Error: Unsupported schedule \"" << schedule << "\", options are \"default\", \"auto\", \"student\"" << endl;
     assert(false);
