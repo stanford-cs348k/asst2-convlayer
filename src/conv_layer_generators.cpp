@@ -1,22 +1,3 @@
-// Halide tutorial lesson 15: Generators part 1
-
-// This lesson demonstrates how to encapsulate Halide pipelines into
-// reusable components called generators.
-
-// On linux, you can compile and run it like so:
-// g++ lesson_15*.cpp ../tools/GenGen.cpp -g -std=c++11 -fno-rtti -I ../include -L ../bin -lHalide -lpthread -ldl -o lesson_15_generate
-// bash lesson_15_generators_usage.sh
-
-// On os x:
-// g++ lesson_15*.cpp ../tools/GenGen.cpp -g -std=c++11 -fno-rtti -I ../include -L ../bin -lHalide -o lesson_15_generate
-// bash lesson_15_generators_usage.sh
-
-// If you have the entire Halide source tree, you can also build it by
-// running:
-//    make tutorial_lesson_15_generators
-// in a shell with the current directory at the top of the halide
-// source tree.
-
 #include "Halide.h"
 #include <stdio.h>
 
@@ -26,7 +7,7 @@ using namespace Halide;
 // compilation of Halide pipelines. Instead of writing an int main()
 // with an ad-hoc command-line interface like we did in lesson 10, we
 // define a class that inherits from Halide::Generator.
-class MyFirstGenerator : public Halide::Generator<MyFirstGenerator> {
+class DefaultConvLayerGenerator : public Halide::Generator<DefaultConvLayerGenerator> {
 public:
     // We declare the Inputs to the Halide pipeline as public
     // member variables. They'll appear in the signature of our generated
@@ -39,7 +20,7 @@ public:
 
     // Typically you declare your Vars at this scope as well, so that
     // they can be used in any helper methods you add later.
-    Var x, y;
+    Var x, y, z, n;
 
     // We then define a method that constructs and return the Halide
     // pipeline:
@@ -58,7 +39,7 @@ public:
 // an "int main(...)" that provides the command-line interface to use
 // your generator class. We need to tell that code about our
 // generator. We do this like so:
-HALIDE_REGISTER_GENERATOR(MyFirstGenerator, my_first_generator)
+HALIDE_REGISTER_GENERATOR(DefaultConvLayerGenerator, DefaultConvLayerGenerator)
 
 // If you like, you can put multiple Generators in the one file. This
 // could be a good idea if they share some common code. Let's define
