@@ -86,30 +86,31 @@ int main(int argc, char** argv) {
   data.input = FillRandom(params.width*params.height*params.channels*params.n);
   data.output = FillZero(params.width*params.height*params.n*params.num_f);
 
-  ConvolutionLayer::Data fast_data;
-  fast_data.biases = data.biases;
-  fast_data.weights = data.weights;
-  fast_data.input = data.input;
-  fast_data.output = FillZero(params.width*params.height*params.n*params.num_f);
-
   if (schedule == "default") {
     std::unique_ptr<ConvolutionLayer> reference_conv_layer(new HalideConvolutionLayer);
     reference_conv_layer->Init(params);
 
-    double total_elapsed = 0.;
-    auto start = std::chrono::system_clock::now();
-    reference_conv_layer->Run(params, data);
-    auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed = end - start;
-    total_elapsed += elapsed.count();
-    std::cout << "Reference Convolution layer took " << elapsed.count() << " secconds" << std::endl;
+    double min_time = 1e10;
+
+    for (int i = 0; i < 3; i++) {
+      double total_elapsed = 0.;
+      auto start = std::chrono::system_clock::now();
+      reference_conv_layer->Run(params, data);
+      auto end = std::chrono::system_clock::now();
+      std::chrono::duration<double> elapsed = end - start;
+      total_elapsed += elapsed.count();
+      if (total_elapsed < min_time) {
+        min_time = total_elapsed;
+      }
+    }
+    std::cout << "Reference Convolution layer took " << min_time << " secconds" << std::endl;
   } else if (schedule == "student") {
     std::unique_ptr<ConvolutionLayer> fast_conv_layer(new FastConvolutionLayer);
     fast_conv_layer->Init(params);
 
     double total_elapsed = 0.;
     auto start = std::chrono::system_clock::now();
-    fast_conv_layer->Run(params, fast_data);
+    fast_conv_layer->Run(params, data);
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed = end - start;
     total_elapsed += elapsed.count();
@@ -124,32 +125,10 @@ int main(int argc, char** argv) {
   }
 
 
-  {
-    std::unique_ptr<ConvolutionLayer> fast_conv_layer(new FastConvolutionLayer);
-    fast_conv_layer->Init(params);
-
-    double total_elapsed = 0.;
-    auto start = std::chrono::system_clock::now();
-    fast_conv_layer->Run(params, fast_data);
-    auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed = end - start;
-    total_elapsed += elapsed.count();
-    std::cout << "Fast Convolution layer took " << elapsed.count() << " secconds" << std::endl;
-  }
-
-  int output_size =
-    params.width*params.height*params.n*params.num_f;
-  float eps = 0.001;
-  CompareBuffers(data.output, fast_data.output, eps, output_size);
-
-  std::cout << "Fast result matches reference" << endl;
-
   delete data.input;
   delete data.output;
   delete data.biases;
   delete data.weights;
-
-  delete fast_data.output;
 
   return 0;
 }
