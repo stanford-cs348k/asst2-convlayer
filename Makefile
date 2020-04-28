@@ -9,7 +9,7 @@ OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 
 INCLUDES := -I$(HALIDE_DIR)/include -I./$(BUILD_DIR)
 DEFINES := -DUSE_HALIDE
-LDFLAGS := -L$(HALIDE_DIR)/bin -lHalide -ldl -lpthread -lDefaultConvLayerGenerator.a
+LDFLAGS := -L$(HALIDE_DIR)/bin -L./$(BUILD_DIR) -lHalide -ldl -lpthread
 CPPFLAGS :=
 CXXFLAGS := -std=c++11 -g
 
@@ -25,7 +25,7 @@ clean:
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)/DefaultConvLayerGenerator.a
 	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEFINES) $(INCLUDES) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEFINES) $(INCLUDES) -c -o $@ $^
 
 
 conv_layer_generator:
