@@ -7,24 +7,32 @@ BIN_DIR := bin
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 
-INCLUDES := -I$(HALIDE_DIR)/include
+INCLUDES := -I$(HALIDE_DIR)/include -I./$(BUILD_DIR)
 DEFINES := -DUSE_HALIDE
-LDFLAGS := -L$(HALIDE_DIR)/bin -lHalide -ldl -lpthread
+LDFLAGS := -L$(HALIDE_DIR)/bin -lHalide -ldl -lpthread -lDefaultConvLayerGenerator.a
 CPPFLAGS :=
 CXXFLAGS := -std=c++11 -g
 
 CXX ?= g++
 
-halide_conv_generator:
-	$(CXX) src/conv_layer_generators.cpp $(HALIDE_DIR)/tools/GenGen.cpp -g -std=c++11 -fno-rtti -I $(HALIDE_DIR)/include -L $(HALIDE_DIR)/bin -lHalide -lpthread -ldl -o lesson_15_generate
-
-convlayer: $(OBJ_FILES) halide_conv_generator
+convlayer: $(OBJ_FILES)
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $^ $(LDFLAGS) -o $(BIN_DIR)/$@
 
 clean:
 	\rm -rf $(BUILD_DIR) $(BIN_DIR)
+	\rm -f conv_layer_generator
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(BUILD_DIR)/%.o: $(BUILD_DIR)/DefaultConvLayerGenerator.a $(SRC_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEFINES) $(INCLUDES) -c -o $@ $<
+
+
+conv_layer_generator:
+	$(CXX) src/conv_layer_generators.cpp $(HALIDE_DIR)/tools/GenGen.cpp -g -std=c++11 -fno-rtti -I $(HALIDE_DIR)/include -L $(HALIDE_DIR)/bin -lHalide -lpthread -ldl -o conv_layer_generator
+
+$(BUILD_DIR)/DefaultConvLayerGenerator.a: conv_layer_generator
+	@mkdir -p $(BUILD_DIR)
+	./conv_layer_generator -g DefaultConvLayerGenerator -o ./$(BUILD_DIR) target=host
+
+

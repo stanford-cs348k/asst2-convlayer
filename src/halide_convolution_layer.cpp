@@ -6,6 +6,8 @@
 
 #include "Halide.h"
 
+#include "DefaultConvLayerGenerator.h"
+
 void HalideConvolutionLayer::Init(Parameters params) {
 }
 

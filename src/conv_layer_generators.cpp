@@ -9,7 +9,7 @@ public:
     Input<Buffer<float>> b{"biases", 1};
     Input<Buffer<float>> W{"Weights", 4};
 
-    Output<Buffer<uint8_t>> forward{"forward", 4};
+    Output<Buffer<float>> forward{"forward", 4};
 
     Var x, y, z, n;
 
