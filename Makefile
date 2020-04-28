@@ -23,13 +23,13 @@ clean:
 	\rm -rf $(BUILD_DIR) $(BIN_DIR)
 	\rm -f conv_layer_generator
 
-$(BUILD_DIR)/%.o: $(BUILD_DIR)/DefaultConvLayerGenerator.a $(SRC_DIR)/%.cpp
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)/DefaultConvLayerGenerator.a
 	@mkdir -p $(BUILD_DIR)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEFINES) $(INCLUDES) -c -o $@ $<
 
 
 conv_layer_generator:
-	$(CXX) src/conv_layer_generators.cpp $(HALIDE_DIR)/tools/GenGen.cpp -g -std=c++11 -fno-rtti -I $(HALIDE_DIR)/include -L $(HALIDE_DIR)/bin -lHalide -lpthread -ldl -o conv_layer_generator
+	$(CXX) conv_layer_generators.cpp $(HALIDE_DIR)/tools/GenGen.cpp -g -std=c++11 -fno-rtti -I $(HALIDE_DIR)/include -L $(HALIDE_DIR)/bin -lHalide -lpthread -ldl -o conv_layer_generator
 
 $(BUILD_DIR)/DefaultConvLayerGenerator.a: conv_layer_generator
 	@mkdir -p $(BUILD_DIR)
