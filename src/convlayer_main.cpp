@@ -132,10 +132,10 @@ int main(int argc, char** argv) {
   }
 
 
-  delete data.input;
-  delete data.output;
-  delete data.biases;
-  delete data.weights;
+  delete[] data.input;
+  delete[] data.output;
+  delete[] data.biases;
+  delete[] data.weights;
 
   return 0;
 }
