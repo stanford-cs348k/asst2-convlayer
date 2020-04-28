@@ -1,13 +1,13 @@
-#ifndef FAST_CONVOLUTION_LAYER_HPP_
-#define FAST_CONVOLUTION_LAYER_HPP_
+#ifndef STUDENT_CONVOLUTION_LAYER_HPP_
+#define STUDENT_CONVOLUTION_LAYER_HPP_
 
 #include "convolution_layer.hpp"
 
-// A fast implementation of a MobileNet convolution layer. The functions Init()
+// Your implementation of a MobileNet convolution layer. The functions Init()
 // and Run() are left empty for you to implement.
-class FastConvolutionLayer : public ConvolutionLayer {
+class StudentConvolutionLayer : public ConvolutionLayer {
  public:
-  FastConvolutionLayer() = default;
+  StudentConvolutionLayer() = default;
 
   // An auxiliary function called once, before Run() is ever called (however,
   // Run() may be called multiple times, but Init() will only be called
@@ -26,4 +26,4 @@ class FastConvolutionLayer : public ConvolutionLayer {
   // END: CS348K STUDENTS MODIFY THIS CODE
 };
 
-#endif  // FAST_CONVOLUTION_LAYER_HPP_
+#endif  // STUDENT_CONVOLUTION_LAYER_HPP_

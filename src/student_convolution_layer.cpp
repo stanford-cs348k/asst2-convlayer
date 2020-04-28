@@ -1,4 +1,4 @@
-#include "fast_convolution_layer.hpp"
+#include "student_convolution_layer.hpp"
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -7,13 +7,13 @@
 
 #include "StudentConvLayerGenerator.h"
 
-void FastConvolutionLayer::Init(Parameters params) {
+void StudentConvolutionLayer::Init(Parameters params) {
   // BEGIN: CS348K STUDENTS MODIFY THIS CODE
   // END: CS348K STUDENTS MODIFY THIS CODE
 }
 
-void FastConvolutionLayer::Run(Parameters params, Data data) {
-  // see description of Parameters struct in fast_convolution_layer.hpp
+void StudentConvolutionLayer::Run(Parameters params, Data data) {
+  // see description of Parameters struct in convolution_layer.hpp
   
   // input: input activations for the conv layer
   Halide::Runtime::Buffer<float> in_func(data.input,

@@ -9,7 +9,7 @@
 #include <vector>
 #include "convolution_layer.hpp"
 #include "halide_convolution_layer.hpp"
-#include "fast_convolution_layer.hpp"
+#include "student_convolution_layer.hpp"
 #include "auto_convolution_layer.hpp"
 
 #include "args.hxx"
@@ -171,15 +171,15 @@ int main(int argc, char** argv) {
     }
     std::cout << "Default schedule convolution layer: " << min_time << " seconds" << std::endl;
   } else if (schedule == "student") {
-    std::unique_ptr<ConvolutionLayer> fast_conv_layer(new FastConvolutionLayer);
-    fast_conv_layer->Init(params);
+    std::unique_ptr<ConvolutionLayer> student_conv_layer(new StudentConvolutionLayer);
+    student_conv_layer->Init(params);
 
     double min_time = 1e10;
 
     for (int i = 0; i < 3; i++) {
       double total_elapsed = 0.;
       auto start = std::chrono::system_clock::now();
-      fast_conv_layer->Run(params, data);
+      student_conv_layer->Run(params, data);
       auto end = std::chrono::system_clock::now();
       std::chrono::duration<double> elapsed = end - start;
       total_elapsed += elapsed.count();
