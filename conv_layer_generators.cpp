@@ -32,6 +32,8 @@ public:
 
 HALIDE_REGISTER_GENERATOR(DefaultConvLayerGenerator, DefaultConvLayerGenerator)
 
+// This is the class you will use to create your scheduled conv layer.
+// Insert the schedule in the method void generate().
 class StudentConvLayerGenerator : public Halide::Generator<StudentConvLayerGenerator> {
 public:
     Input<Buffer<float>> in_func{"in_func", 4};
@@ -64,8 +66,8 @@ public:
       forward.print_loop_nest();
 
       // BEGIN: CS348K STUDENTS MODIFY THIS CODE
-      // Insert your conv layer schedule here
-      
+      // Insert your conv layer schedule here. Do not
+      // change the convolution algorithm given above!
       // END: CS348K STUDENTS MODIFY THIS CODE
 
     }

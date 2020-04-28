@@ -69,7 +69,7 @@ and on Linux it will be:
 
 __Modifying the code__
 
-Your modifications to the code should only go in the file `conv_layer_generators.cpp`. Inside that file you should not modify the implementation of the convolution layer algorithm. You should only add Halide scheduling directives to the program to make it run faster. Regions you should modify will be marked by comments that look like so:
+Your modifications to the code should only go in the file `conv_layer_generators.cpp` inside the class `StudentConvLayerGenerator`. Inside that file you should not modify the implementation of the convolution layer algorithm. You should only add Halide scheduling directives to the program to make it run faster. Regions you should modify will be marked by comments that look like so:
 
     // BEGIN: CS348K STUDENTS MODIFY THIS CODE
     
