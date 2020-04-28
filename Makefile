@@ -24,9 +24,11 @@ ORIGINAL_HALIDE_PATH := leave/blank/if/you/dont/have/dyload/problems
 convlayer: $(OBJ_FILES) $(BUILD_DIR)/DefaultConvLayerGenerator.a $(BUILD_DIR)/StudentConvLayerGenerator.a $(BUILD_DIR)/AutoConvLayerGenerator.a
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $^ $(LDFLAGS) -o $(BIN_DIR)/$@
-ifeq ($(UNAME), Darwin)
-	install_name_tool -change $(ORIGINAL_HALIDE_PATH)/libHalide.dylib $(HALIDE_DIR)/bin/libHalide.dylib $(BIN_DIR)/$@
-endif
+# Uncomment this code if you have dyload problems on mac
+# and then set ORIGINAL_HALIDE_PATH based on the results of `otool -L conv_layer_generator`
+#ifeq ($(UNAME), Darwin)
+	#install_name_tool -change $(ORIGINAL_HALIDE_PATH)/libHalide.dylib $(HALIDE_DIR)/bin/libHalide.dylib $(BIN_DIR)/$@
+#endif
 
 clean:
 	\rm -rf $(BUILD_DIR) $(BIN_DIR)
