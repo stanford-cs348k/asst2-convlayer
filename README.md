@@ -1,16 +1,9 @@
-# CS348K Assignment 2: Efficient MobileNet Conv Layer Evaluation #
+# CS348K (Mini-) Assignment 2: Optimizing a Convolutional Layer in Halide #
 
-In this assignment you will implement a layer of a CNN. In particular, this assignment is restricted to the evaluation of a single convolutional layer of the network. See https://arxiv.org/abs/1704.04861 for more details about the full network. Also, unlike the camera RAW assignment, this assignemnt is focused on efficiency. Your code will be evaluated on how fast it runs.
+In this assignment you will implement optimize the performance of code to evaluate a convolutional layer in a DNN. 
+Implementing a conv layer [is easy](http://cs348k.stanford.edu/spring20/lecture/dnneval/slide_024) (we give you the algorithm in Halide in the starter code). The challenge is implementing the layer efficiently using the techniques described in class, such as SIMD vector processing, multi-core execution, and efficient blocking for cache locality. 
 
-# Why speedup MobileNets? #
-The MobileNets DNN architecture was designed with performance in mind, and a major aspect of the network's design is the use of a *separable* convolution. So in this assignment you will implement one part of the DNN which consists of the following sequence of stages:
-
- ![MobileNet Layers](images/conv_layer.png "MobileNet Layers")
-
-Here `BN` stands for a batchnorm layer and `ReLU` is a rectified linear unit (see below for details).
-
-#  What is the challenge? #
-Implementing the layers correctly is easy. The challenge is implementing them efficiently using many of the techniques described in class, such as SIMD vector processing, multi-core execution, and efficient blocking for cache locality. To make these techniques simpler, you will implement the assignment in Halide. **You are allowed to use the reference Halide algorithm provided in the codebase verbatim**. However, to improve the performance you will need to write an efficient Halide schedule. The starter code uses a naive/default Halide schedule, which has loops that look like:
+**You are allowed to use the reference Halide algorithm provided in the codebase verbatim** (see `fast_convolution_layer.cpp`). However, to improve the performance you will need to write an efficient Halide schedule. The starter code uses a naive/default Halide schedule, which corresponds to an evaluate order equivalent to code with loops that look like:
 
 ```
   // Initialization
@@ -30,7 +23,7 @@ Implementing the layers correctly is easy. The challenge is implementing them ef
                 conv(...) = ...
 ```
 
-Your job then would be to write a custom Halide schedule that performs better than the default. (See [`Halide::Func::print_loop_nest()`](http://halide-lang.org/docs/class_halide_1_1_func.html#a365488c2eaf769c61635120773e541e1) to inspect and debug your schedule like this.)
+Your job is to implement a custom Halide schedule that performs better than the default. (See [`Halide::Func::print_loop_nest()`](http://halide-lang.org/docs/class_halide_1_1_func.html#a365488c2eaf769c61635120773e541e1) to inspect and debug your schedule like this.)
 
 # Resources and documentation #
 * [Halide tutorials](http://halide-lang.org/tutorials/tutorial_introduction.html). In particular, see Tutorial 01 for a basic introduction, Tutorial 07 for a convolution example, and Tutorial 05 for an introduction to Halide schedules, and Tutorial 08 for more advanced scheduling topics.
