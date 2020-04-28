@@ -45,62 +45,90 @@ float* FillRandom(const int size) {
 
 int main(int argc, char** argv) {
   string schedule = "default";
+  int width = 28;
+  int height = 28;
+  int channels = 3;
+  int n = 16;
 
-    args::ArgumentParser parser("Runs the scheduled convolution layer.", "");
-    args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
-    args::ValueFlag<int> integer(parser, "integer", "The integer flag", {'i'});
-    args::ValueFlag<std::string> schedule_algorithm(parser, "schedule algorithm", "The algorithm used to schedule the convolution. Legal values are auto, student, and default", {'s', "schedule"});
+  int num_f = 256;
+  int f_w = 3;
+  int f_h = 3;
 
-    try
-    {
-        parser.ParseCLI(argc, argv);
-    }
-    catch (args::Help)
-    {
-        std::cout << parser;
-        return 0;
-    }
-    catch (args::ParseError e)
-    {
-        std::cerr << e.what() << std::endl;
-        std::cerr << parser;
-        return 1;
-    }
-    catch (args::ValidationError e)
-    {
-        std::cerr << e.what() << std::endl;
-        std::cerr << parser;
-        return 1;
-    }
-    if (integer) { std::cout << "i: " << args::get(integer) << std::endl; }
+  args::ArgumentParser parser("Runs the scheduled convolution layer.", "");
+  args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
 
-    if (schedule_algorithm) {
-      schedule = args::get(schedule_algorithm);
-    }
+  args::ValueFlag<std::string> schedule_algorithm(parser, "schedule algorithm", "The algorithm used to schedule the convolution. Legal values are auto, student, and default", {'s', "schedule"});
 
-  if (argc != 9) {
-    cout << "Error: Given " << argc << " arguments, expected 9" << endl;
-    cout << "usage: ./bin/convlayer <scheduling algorithm> <width> <height> <channels> <batch size> <num filters> <filter width> <filter height>" << endl;
+  args::ValueFlag<int> width_arg(parser, "width", "The input image width.", {'w', "width"});
+  args::ValueFlag<int> height_arg(parser, "height", "The input image height.", {'h', "height"});
+  args::ValueFlag<int> channels_arg(parser, "channels", "The number of channels in the input image.", {'c', "channels"});
+  args::ValueFlag<int> batch_size_arg(parser, "batch size", "The number of images processed in a batch.", {'b', "batch-size"});
+
+  args::ValueFlag<int> num_filters_arg(parser, "num filters", "The number of filters applied to each image.", {"num-filters"});
+  args::ValueFlag<int> filter_width_arg(parser, "filter width", "The filter width.", {"filter-width"});
+  args::ValueFlag<int> filter_height_arg(parser, "filter height", "The filter height.", {"filter-height"});
+
+  try
+  {
+    parser.ParseCLI(argc, argv);
+  }
+  catch (args::Help)
+  {
+    std::cout << parser;
+    return 0;
+  }
+  catch (args::ParseError e)
+  {
+    std::cerr << e.what() << std::endl;
+    std::cerr << parser;
+    return 1;
+  }
+  catch (args::ValidationError e)
+  {
+    std::cerr << e.what() << std::endl;
+    std::cerr << parser;
     return 1;
   }
 
-  
-  int width = stoi(argv[2]);
-  int height = stoi(argv[3]);
-  int channels = stoi(argv[4]);
-  int n = stoi(argv[5]);
-  
-  int num_f = stoi(argv[6]);
-  int f_w = stoi(argv[7]);
-  int f_h = stoi(argv[8]);
+  if (schedule_algorithm) {
+    schedule = args::get(schedule_algorithm);
+  }
 
-  cout << "Schedule: " << schedule << endl;
-  cout << "width   : " << width << endl;
-  cout << "height  : " << height << endl;
-  cout << "channels : " << channels << endl;
-  cout << "batch size: " << n << endl;
-  cout << "num filters: " << num_f << endl;
-  cout << "filter width: " << f_w << endl;
+  if (width_arg) {
+    width = get(width_arg);
+  }
+
+  if (height_arg) {
+    height = get(height_arg);
+  }
+  
+  if (channels_arg) {
+    channels = get(channels_arg);
+  }
+
+  if (batch_size_arg) {
+    n = get(batch_size_arg);
+  }
+
+  if (num_filters_arg) {
+    num_f = get(num_filters_arg);
+  }
+
+  if (filter_width_arg) {
+    f_w = get(filter_width_arg);
+  }
+
+  if (filter_height_arg) {
+    f_h = get(filter_height_arg);
+  }
+
+  cout << "Schedule     : " << schedule << endl;
+  cout << "width        : " << width << endl;
+  cout << "height       : " << height << endl;
+  cout << "channels     : " << channels << endl;
+  cout << "batch size   : " << n << endl;
+  cout << "num filters  : " << num_f << endl;
+  cout << "filter width : " << f_w << endl;
   cout << "filter height: " << f_h << endl << endl;
 
   ConvolutionLayer::Parameters params;
