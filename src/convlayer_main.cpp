@@ -42,7 +42,7 @@ float* FillRandom(const int size) {
 int main(int argc, char** argv) {
   if (argc != 9) {
     cout << "Error: Given " << argc << " arguments, expected 9" << endl;
-    cout << "usage: ./bin/convlayer <scheduling algorith> <width> <height> <channels> <batch size> <num filters> <filter width> <filter height>" << endl;
+    cout << "usage: ./bin/convlayer <scheduling algorithm> <width> <height> <channels> <batch size> <num filters> <filter width> <filter height>" << endl;
     return 1;
   }
 
@@ -108,14 +108,21 @@ int main(int argc, char** argv) {
     std::unique_ptr<ConvolutionLayer> fast_conv_layer(new FastConvolutionLayer);
     fast_conv_layer->Init(params);
 
-    double total_elapsed = 0.;
-    auto start = std::chrono::system_clock::now();
-    fast_conv_layer->Run(params, data);
-    auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed = end - start;
-    total_elapsed += elapsed.count();
-    std::cout << "Fast Convolution layer took " << elapsed.count() << " secconds" << std::endl;
+    double min_time = 1e10;
 
+    for (int i = 0; i < 3; i++) {
+      double total_elapsed = 0.;
+      auto start = std::chrono::system_clock::now();
+      fast_conv_layer->Run(params, data);
+      auto end = std::chrono::system_clock::now();
+      std::chrono::duration<double> elapsed = end - start;
+      total_elapsed += elapsed.count();
+      if (total_elapsed < min_time) {
+        min_time = total_elapsed;
+      }
+    }
+
+    std::cout << "Fast Convolution layer took " << min_time << " secconds" << std::endl;
   } else if (schedule == "auto") {
     cout << "Autoscheduled conv not yet implemented" << endl;
     assert(false);

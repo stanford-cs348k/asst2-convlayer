@@ -56,8 +56,7 @@ Then you can build the code using the instructions above.
 __Running the starter code:__
 
 Just run:
-
-    ./bin/convlayer DATA_DIR/activations.bin DATA_DIR/weights.bin DATA_DIR/golden.bin <num_runs>
+    ./bin/convlayer student 64 30 3 400 5 6 7
 
 This code will run your (initially empty) version of the convolution layer using the activations in `DATA_DIR/activations.bin` and weights in `DATA_DIR/weights.bin`. It will run for `num_runs` trials, and report the timings across all runs, as well as validate the output against the data contained in `DATA_DIR/golden.bin`. To run correctly you must ensure that
 Halide is in your library load path. On OSX this can be done like so:
