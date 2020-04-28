@@ -27,8 +27,6 @@ public:
       forward(x, y, z, n) += W(r.x, r.y, r.z, z) *
         f_in_bound(x + r.x - pad, y + r.y - pad, r.z, n);
 
-      std::cout << "Loop nests..." << std::endl;
-      forward.print_loop_nest();
     }
 };
 
@@ -104,9 +102,6 @@ public:
       // now perform the convolutions on the inputs
       forward(x, y, z, n) += W(r.x, r.y, r.z, z) *
         f_in_bound(x + r.x - pad, y + r.y - pad, r.z, n);
-
-      std::cout << "Loop nests..." << std::endl;
-      forward.print_loop_nest();
 
       // Autoschedule
       if (auto_schedule) {
