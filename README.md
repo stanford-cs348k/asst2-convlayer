@@ -33,7 +33,9 @@ Grab the assignment starter code.
 
 The codebase uses a simple `Makefile` as the build system. However, there is a dependency on Halide.
 
-To build the starter code, run `make` from the top level directory. The driver source code is in `src/`, and object files and binaries will be populated in `build/` and `bin/` respectively. The implementation of the convolution layer generator you will modify is in the top-level file `conv_layer_generators.cpp`.
+To build the starter code, run `make` from the top level directory. The driver source code is in `src/`, and
+the implementation of the convolution layer generator you will modify is in the top-level file `conv_layer_generators.cpp`.
+Object files and binaries will be populated in `build/` and `bin/` respectively.
 
 To install and use Halide follow the instructions at http://halide-lang.org/. In particular, you should [download a binary release of Halide](https://github.com/halide/Halide/releases). Once you've downloaded and untar'd the release, say into directory `halide_dir`, change the previous lines back, and also the following line in `Makefile`
 
