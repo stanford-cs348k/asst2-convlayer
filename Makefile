@@ -44,7 +44,7 @@ conv_layer_generator:
 # Note to CS348K students: uncomment this code if you have dyload problems on mac
 # and then set ORIGINAL_HALIDE_DYLIB_PATH based on the results of `otool -L conv_layer_generator`
 #ifeq ($(UNAME), Darwin)
-	install_name_tool -change $(ORIGINAL_HALIDE_DYLIB_PATH)/libHalide.dylib $(HALIDE_DIR)/bin/libHalide.dylib $@
+	#install_name_tool -change $(ORIGINAL_HALIDE_DYLIB_PATH)/libHalide.dylib $(HALIDE_DIR)/bin/libHalide.dylib $@
 #endif
 
 $(BUILD_DIR)/StudentConvLayerGenerator.a: conv_layer_generator
