@@ -31,18 +31,6 @@ void FastConvolutionLayer::Run(Parameters params, Data data) {
 
   StudentConvLayerGenerator(in_func, b, W, output_buffer);
   
-  //// first initialize all outputs to the bias
-  //forward(x, y, z, n) = b(z);
-  //// now perform the convolutions on the inputs
-  //forward(x, y, z, n) += W(r.x, r.y, r.z, z) *
-    //f_in_bound(x + r.x - params.pad, y + r.y - params.pad, r.z, n);
-  
-  //// realize() is the point where Halide performs the computation, storing the output in output_buffer 
-  //forward.realize(output_buffer);
-  
-  //std::cout << "[DEBUG] output buffer size = "
-            //<< output_buffer.get()->number_of_elements() << std::endl;
-  
   // Copy data from the Halide output buffer to a C buffer in data.output.
   {
     int index = 0;
