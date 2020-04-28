@@ -23,7 +23,13 @@ Implementing a conv layer [is easy](http://cs348k.stanford.edu/spring20/lecture/
                 conv(...) = ...
 ```
 
-Your job is to implement a custom Halide schedule that performs better than the default. (See [`Halide::Func::print_loop_nest()`](http://halide-lang.org/docs/class_halide_1_1_func.html#a365488c2eaf769c61635120773e541e1) to inspect and debug your schedule like this.) # Resources and documentation # * [Halide tutorials](http://halide-lang.org/tutorials/tutorial_introduction.html). In particular, see Tutorial 01 for a basic introduction, Tutorial 07 for a convolution example, and Tutorial 05 for an introduction to Halide schedules, and Tutorial 08 for more advanced scheduling topics.  * [Exhaustive Halide documentation](http://halide-lang.org/docs/).  # Assignment mechanics # Grab the assignment starter code.  git clone git@github.com:stanford-cs348k/asst2-convlayer.git __Build Instructions__
+Your job is to implement a custom Halide schedule that performs better than the default. (See [`Halide::Func::print_loop_nest()`](http://halide-lang.org/docs/class_halide_1_1_func.html#a365488c2eaf769c61635120773e541e1) to inspect and debug your schedule like this.) # Resources and documentation # * [Halide tutorials](http://halide-lang.org/tutorials/tutorial_introduction.html). In particular, see Tutorial 01 for a basic introduction, Tutorial 07 for a convolution example, and Tutorial 05 for an introduction to Halide schedules, and Tutorial 08 for more advanced scheduling topics.  * [Exhaustive Halide documentation](http://halide-lang.org/docs/). 
+
+# Assignment mechanics #
+
+Grab the assignment starter code.
+
+    git clone git@github.com:stanford-cs348k/asst2-convlayer.git __Build Instructions__
 
 The codebase uses a simple `Makefile` as the build system. However, there is a dependency on Halide.
 
