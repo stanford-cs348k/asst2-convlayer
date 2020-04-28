@@ -38,13 +38,13 @@ conv_layer_generator:
 
 $(BUILD_DIR)/StudentConvLayerGenerator.a: conv_layer_generator
 	@mkdir -p $(BUILD_DIR)
-	./conv_layer_generator -g StudentConvLayerGenerator -o ./$(BUILD_DIR) target=host
+	./conv_layer_generator -g StudentConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=false
 
 $(BUILD_DIR)/DefaultConvLayerGenerator.a: conv_layer_generator
 	@mkdir -p $(BUILD_DIR)
-	./conv_layer_generator -g DefaultConvLayerGenerator -o ./$(BUILD_DIR) target=host
+	./conv_layer_generator -g DefaultConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=false
 
 
 $(BUILD_DIR)/AutoConvLayerGenerator.a: conv_layer_generator
 	@mkdir -p $(BUILD_DIR)
-	./conv_layer_generator -g AutoConvLayerGenerator -o ./$(BUILD_DIR) target=host
+	./conv_layer_generator -g AutoConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=true
