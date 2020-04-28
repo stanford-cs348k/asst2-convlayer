@@ -15,7 +15,7 @@ CXXFLAGS := -std=c++11 -g
 
 CXX ?= g++
 
-convlayer: $(OBJ_FILES)
+convlayer: $(OBJ_FILES) $(BUILD_DIR)/DefaultConvLayerGenerator.a
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $^ $(LDFLAGS) -o $(BIN_DIR)/$@
 
@@ -25,7 +25,7 @@ clean:
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)/DefaultConvLayerGenerator.a
 	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEFINES) $(INCLUDES) -c -o $@ $^
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEFINES) $(INCLUDES) -c -o $@ $<
 
 
 conv_layer_generator:

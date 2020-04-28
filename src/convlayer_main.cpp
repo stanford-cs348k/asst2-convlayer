@@ -24,6 +24,9 @@ float* FillZero(const int size) {
 void CompareBuffers(float* ref, float* data, float eps, int size) {
   for (int i = 0; i < size; i++) {
     float diff = abs(ref[i] - data[i]);
+    if (!(diff < eps)) {
+      cout << "Buffers differ by " << diff << " at " << i << ", ref[" << i << "] = " << ref[i] << ", data[" << i << "] = " << data[i] << endl;
+    }
     assert(diff < eps);
   }
 }
@@ -101,6 +104,16 @@ int main(int argc, char** argv) {
     total_elapsed += elapsed.count();
     std::cout << "Reference Convolution layer took " << elapsed.count() << " secconds" << std::endl;
   } else if (schedule == "student") {
+    std::unique_ptr<ConvolutionLayer> fast_conv_layer(new FastConvolutionLayer);
+    fast_conv_layer->Init(params);
+
+    double total_elapsed = 0.;
+    auto start = std::chrono::system_clock::now();
+    fast_conv_layer->Run(params, fast_data);
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+    total_elapsed += elapsed.count();
+    std::cout << "Fast Convolution layer took " << elapsed.count() << " secconds" << std::endl;
 
   } else if (schedule == "auto") {
     cout << "Autoscheduled conv not yet implemented" << endl;
@@ -126,7 +139,7 @@ int main(int argc, char** argv) {
 
   int output_size =
     params.width*params.height*params.n*params.num_f;
-  float eps = 0.00001;
+  float eps = 0.001;
   CompareBuffers(data.output, fast_data.output, eps, output_size);
 
   std::cout << "Fast result matches reference" << endl;
