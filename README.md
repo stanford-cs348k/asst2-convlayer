@@ -50,9 +50,11 @@ Then you can build the code using the instructions above.
 __Running the starter code:__
 
 To get help run:
+
     ./bin/convlayer -h
 
 To run your scheduled conv layer try:
+
     ./bin/convlayer --schedule student
 
 This code will run your version of the convolution layer using randomly generated inputs and weights. It will run for 3 trials, and report the minimum time of the 3 runs.
