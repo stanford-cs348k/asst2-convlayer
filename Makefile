@@ -4,7 +4,7 @@ UNAME = $(shell uname)
 
 # Note to CS348K students: this is the location of your Halide
 # installation on your machine.
-HALIDE_DIR=/MY/PATH/TO/HALIDE
+HALIDE_DIR=/MY/PATH/TO/HALIDE/
 
 # Note to CS348K students: On some OSX platforms we need to patch up
 # the dyld path in the generated lib.  This value is being set to the
