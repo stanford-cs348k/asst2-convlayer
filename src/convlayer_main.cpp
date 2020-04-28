@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <chrono>
+#include <cassert>
 #include <cmath>		
 #include <cstdlib> 
 #include <ctime>
@@ -36,14 +37,43 @@ float* FillRandom(const int size) {
 }
 
 int main(int argc, char** argv) {
+  if (argc != 9) {
+    cout << "Error: Given " << argc << " arguments, expected 9" << endl;
+    cout << "usage: ./bin/convlayer <scheduling algorith> <width> <height> <channels> <batch size> <num filters> <filter width> <filter height>" << endl;
+    return 1;
+  }
+
+  string schedule = argv[1];
+  
+  int width = stoi(argv[2]);
+  int height = stoi(argv[3]);
+  int channels = stoi(argv[4]);
+  int n = stoi(argv[5]);
+  
+  int num_f = stoi(argv[6]);
+  int f_w = stoi(argv[7]);
+  int f_h = stoi(argv[8]);
+
+  cout << "Schedule: " << schedule << endl;
+  cout << "width   : " << width << endl;
+  cout << "height  : " << height << endl;
+  cout << "channels : " << channels << endl;
+  cout << "batch size: " << n << endl;
+  cout << "num filters: " << num_f << endl;
+  cout << "filter width: " << f_w << endl;
+  cout << "filter height: " << f_h << endl << endl;
+
   ConvolutionLayer::Parameters params;
-  params.num_f = 64;
-  params.f_w = 8;
-  params.f_h = 14;
-  params.channels = 64;
-  params.width = 47;
-  params.height = 32;
-  params.n = 7;
+  params.width = width;
+  params.height = height;
+  params.channels = channels;
+
+  params.num_f = num_f;
+  params.f_w = f_w;
+  params.f_h = f_h;
+
+  params.n = n;
+
   params.pad = 2;
 
   ConvolutionLayer::Data data;
@@ -96,6 +126,8 @@ int main(int argc, char** argv) {
   delete data.output;
   delete data.biases;
   delete data.weights;
+
+  delete fast_data.output;
 
   return 0;
 }
