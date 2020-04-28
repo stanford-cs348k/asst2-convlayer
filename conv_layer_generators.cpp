@@ -45,6 +45,8 @@ public:
     Var x, y, z, n;
 
     void generate() {
+      // START OF CONVOLUTION ALGORITHM
+      
       // Hardcoded in driver harness as well
       const int pad = 2;
 
@@ -61,13 +63,17 @@ public:
       // now perform the convolutions on the inputs
       forward(x, y, z, n) += W(r.x, r.y, r.z, z) *
         f_in_bound(x + r.x - pad, y + r.y - pad, r.z, n);
-
-      std::cout << "Loop nests..." << std::endl;
-      forward.print_loop_nest();
+      // END OF CONVOLUTION ALGORITHM
 
       // BEGIN: CS348K STUDENTS MODIFY THIS CODE
       // Insert your conv layer schedule here. Do not
       // change the convolution algorithm given above!
+
+      // Debug printout that will printout out your
+      // schedule
+      std::cout << "Loop nests..." << std::endl;
+      forward.print_loop_nest();
+
       // END: CS348K STUDENTS MODIFY THIS CODE
 
     }
