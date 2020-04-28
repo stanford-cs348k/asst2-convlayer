@@ -77,7 +77,7 @@ public:
 HALIDE_REGISTER_GENERATOR(StudentConvLayerGenerator, StudentConvLayerGenerator)
 
 
-class AutoScheduledConvLayerGenerator : public Halide::Generator<AutoScheduledConvLayerGenerator> {
+class AutoConvLayerGenerator : public Halide::Generator<AutoConvLayerGenerator> {
 public:
     Input<Buffer<float>> in_func{"in_func", 4};
     Input<Buffer<float>> b{"biases", 1};
@@ -113,4 +113,4 @@ public:
 };
 
 
-HALIDE_REGISTER_GENERATOR(AutoScheduledConvLayerGenerator, AutoScheduledConvLayerGenerator)
+HALIDE_REGISTER_GENERATOR(AutoConvLayerGenerator, AutoConvLayerGenerator)
