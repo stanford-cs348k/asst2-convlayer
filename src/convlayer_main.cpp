@@ -74,6 +74,7 @@ int main(int argc, char** argv) {
 
   params.n = n;
 
+  // Hardcoded in generator cpp as well
   params.pad = 2;
 
   ConvolutionLayer::Data data;

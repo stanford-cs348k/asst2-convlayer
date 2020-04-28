@@ -5,9 +5,6 @@ using namespace Halide;
 
 class DefaultConvLayerGenerator : public Halide::Generator<DefaultConvLayerGenerator> {
 public:
-    GeneratorParam<int> f_w = {"f_w", 1};
-    GeneratorParam<int> f_h = {"f_h", 1};
-
     Input<Buffer<float>> in_func{"in_func", 4};
     Input<Buffer<float>> b{"biases", 1};
     Input<Buffer<float>> W{"Weights", 4};
@@ -17,15 +14,18 @@ public:
     Var x, y, z, n;
 
     void generate() {
+      // Hardcoded in driver harness as well
+      const int pad = 2;
+
       Halide::Func f_in_bound;
-      f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, 0, in_func.width(), 0, in_func.height(), 0, in_func.channels(), 0, params.n);
+      f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, 0, in_func.width(), 0, in_func.height(), 0, in_func.channels(), 0, in_func.dim(3).extent());
 
       // Add these as generator parameters?
-      Halide::RDom r(0, f_w, 0, f_h, 0, params.channels);
+      Halide::RDom r(0, W.width(), 0, W.height(), 0, W.channels());
 
       forward(x, y, z, n) = b(z);
       forward(x, y, z, n) += W(r.x, r.y, r.z, z) *
-        f_in_bound(x + r.x - params.pad, y + r.y - params.pad, r.z, n);
+        f_in_bound(x + r.x - pad, y + r.y - pad, r.z, n);
 
       std::cout << "Loop nests..." << std::endl;
       forward.print_loop_nest();
