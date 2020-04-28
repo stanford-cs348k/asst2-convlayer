@@ -11,6 +11,10 @@
 #include "halide_convolution_layer.hpp"
 #include "fast_convolution_layer.hpp"
 
+#include "args.hxx"
+
+
+using namespace args;
 using namespace std;
 
 float* FillZero(const int size) {
@@ -40,13 +44,46 @@ float* FillRandom(const int size) {
 }
 
 int main(int argc, char** argv) {
+  string schedule = "default";
+
+    args::ArgumentParser parser("Runs the scheduled convolution layer.", "");
+    args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
+    args::ValueFlag<int> integer(parser, "integer", "The integer flag", {'i'});
+    args::ValueFlag<std::string> schedule_algorithm(parser, "schedule algorithm", "The algorithm used to schedule the convolution. Legal values are auto, student, and default", {'s', "schedule"});
+
+    try
+    {
+        parser.ParseCLI(argc, argv);
+    }
+    catch (args::Help)
+    {
+        std::cout << parser;
+        return 0;
+    }
+    catch (args::ParseError e)
+    {
+        std::cerr << e.what() << std::endl;
+        std::cerr << parser;
+        return 1;
+    }
+    catch (args::ValidationError e)
+    {
+        std::cerr << e.what() << std::endl;
+        std::cerr << parser;
+        return 1;
+    }
+    if (integer) { std::cout << "i: " << args::get(integer) << std::endl; }
+
+    if (schedule_algorithm) {
+      schedule = args::get(schedule_algorithm);
+    }
+
   if (argc != 9) {
     cout << "Error: Given " << argc << " arguments, expected 9" << endl;
     cout << "usage: ./bin/convlayer <scheduling algorithm> <width> <height> <channels> <batch size> <num filters> <filter width> <filter height>" << endl;
     return 1;
   }
 
-  string schedule = argv[1];
   
   int width = stoi(argv[2]);
   int height = stoi(argv[3]);
