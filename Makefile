@@ -21,7 +21,7 @@ INCLUDES := -I$(HALIDE_DIR)/include -I./$(BUILD_DIR)
 DEFINES := -DUSE_HALIDE
 LDFLAGS := -L$(HALIDE_DIR)/bin -L./$(BUILD_DIR) -lHalide -ldl -lpthread
 CPPFLAGS :=
-CXXFLAGS := -std=c++11 -g
+CXXFLAGS := -std=c++11 -g -O3
 
 CXX ?= g++
 
