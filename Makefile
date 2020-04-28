@@ -1,5 +1,7 @@
 SRC_DIR := src
 
+UNAME = $(shell uname)
+
 HALIDE_DIR=/Users/dillon/CppWorkspace/Halide
 BUILD_DIR := build
 BIN_DIR := bin
@@ -18,6 +20,9 @@ CXX ?= g++
 convlayer: $(OBJ_FILES) $(BUILD_DIR)/DefaultConvLayerGenerator.a $(BUILD_DIR)/StudentConvLayerGenerator.a
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $^ $(LDFLAGS) -o $(BIN_DIR)/$@
+#ifeq ($(UNAME), Darwin)
+	#install_name_tool -change @rpath/libHalide.dylib $(HALIDE_DIR)/bin/libHalide.dylib $(BIN_DIR)/$@
+#endif
 
 clean:
 	\rm -rf $(BUILD_DIR) $(BIN_DIR)
