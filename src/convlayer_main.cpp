@@ -8,7 +8,7 @@
 #include <memory>
 #include <vector>
 #include "convolution_layer.hpp"
-#include "halide_convolution_layer.hpp"
+#include "default_convolution_layer.hpp"
 #include "student_convolution_layer.hpp"
 #include "auto_convolution_layer.hpp"
 
@@ -153,7 +153,7 @@ int main(int argc, char** argv) {
   data.output = FillZero(params.width*params.height*params.n*params.num_f);
 
   if (schedule == "default") {
-    std::unique_ptr<ConvolutionLayer> reference_conv_layer(new HalideConvolutionLayer);
+    std::unique_ptr<ConvolutionLayer> reference_conv_layer(new DefaultConvolutionLayer);
     reference_conv_layer->Init(params);
 
     double min_time = 1e10;

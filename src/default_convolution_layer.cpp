@@ -1,4 +1,4 @@
-#include "halide_convolution_layer.hpp"
+#include "default_convolution_layer.hpp"
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -8,10 +8,10 @@
 
 #include "DefaultConvLayerGenerator.h"
 
-void HalideConvolutionLayer::Init(Parameters params) {
+void DefaultConvolutionLayer::Init(Parameters params) {
 }
 
-void HalideConvolutionLayer::Run(Parameters params, Data data) {
+void DefaultConvolutionLayer::Run(Parameters params, Data data) {
 
   Halide::Runtime::Buffer<float> in_func(data.input,
                               params.width,
@@ -27,7 +27,7 @@ void HalideConvolutionLayer::Run(Parameters params, Data data) {
   std::cout << "[DEBUG] output buffer size = "
             << output_buffer.number_of_elements() << std::endl;
             //<< output_buffer.get()->number_of_elements() << std::endl;
-  // Copy data from Halide buffer to raw buffer in data.output.
+  // Copy data from Default buffer to raw buffer in data.output.
   {
     int index = 0;
     for (int n = 0; n < params.n; n++) {
