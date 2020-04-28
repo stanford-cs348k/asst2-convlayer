@@ -15,7 +15,10 @@ CXXFLAGS := -std=c++11 -g
 
 CXX ?= g++
 
-convlayer: $(OBJ_FILES)
+lesson_15_generate:
+	g++ lesson_15*.cpp $(HALIDE_DIR)/tools/GenGen.cpp -g -std=c++11 -fno-rtti -I ../include -L ../bin -lHalide -lpthread -ldl -o lesson_15_generate
+
+convlayer: $(OBJ_FILES) lesson_15_generate.cpp
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $^ $(LDFLAGS) -o $(BIN_DIR)/$@
 
