@@ -55,7 +55,7 @@ Then you can build the code using the instructions above.
 
 __Running the starter code:__
 
-Now you can run the camera. Just run:
+Just run:
 
     ./bin/convlayer DATA_DIR/activations.bin DATA_DIR/weights.bin DATA_DIR/golden.bin <num_runs>
 
@@ -64,7 +64,7 @@ Halide is in your library load path. On OSX this can be done like so:
 
     DYLD_LIBRARY_PATH=<halide_dir>/bin ./bin/convlayer <args>
 
-and on Linux it will be
+and on Linux it will be:
 
     LD_LIBRARY_PATH=<halide_dir>/bin ./bin/convlayer <args>
 
