@@ -10,6 +10,7 @@
 #include "convolution_layer.hpp"
 #include "halide_convolution_layer.hpp"
 #include "fast_convolution_layer.hpp"
+#include "auto_convolution_layer.hpp"
 
 #include "args.hxx"
 
@@ -189,8 +190,24 @@ int main(int argc, char** argv) {
 
     std::cout << "Fast Convolution layer took " << min_time << " secconds" << std::endl;
   } else if (schedule == "auto") {
-    cout << "Autoscheduled conv not yet implemented" << endl;
-    assert(false);
+    std::unique_ptr<ConvolutionLayer> auto_conv_layer(new AutoConvolutionLayer);
+    auto_conv_layer->Init(params);
+
+    double min_time = 1e10;
+
+    for (int i = 0; i < 3; i++) {
+      double total_elapsed = 0.;
+      auto start = std::chrono::system_clock::now();
+      auto_conv_layer->Run(params, data);
+      auto end = std::chrono::system_clock::now();
+      std::chrono::duration<double> elapsed = end - start;
+      total_elapsed += elapsed.count();
+      if (total_elapsed < min_time) {
+        min_time = total_elapsed;
+      }
+    }
+
+    std::cout << "Auto Convolution layer took " << min_time << " secconds" << std::endl;
   } else {
     cout << "Error: Unsupported schedule \"" << schedule << "\", options are \"default\", \"auto\", \"student\"" << endl;
     assert(false);
