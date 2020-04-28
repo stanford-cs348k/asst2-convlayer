@@ -28,14 +28,6 @@ Your job is to implement a custom Halide schedule that performs better than the 
 # Resources and documentation #
 * [Halide tutorials](http://halide-lang.org/tutorials/tutorial_introduction.html). In particular, see Tutorial 01 for a basic introduction, Tutorial 07 for a convolution example, and Tutorial 05 for an introduction to Halide schedules, and Tutorial 08 for more advanced scheduling topics.
 * [Exhaustive Halide documentation](http://halide-lang.org/docs/).
-* Details on the batchnorm layer:
-  - https://leonardoaraujosantos.gitbooks.io/artificial-inteligence/content/batch_norm_layer.html
-  - https://r2rt.com/implementing-batch-normalization-in-tensorflow.html
-* [ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks))
-* [TensorFlow-Slim documentation](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/slim). In case you choose to compare your implementation to a TensorFlow version, we encourage use of *TensorFlow-Slim* which is easier to get off the ground with than TensorFlow proper.
-
-# Going further #
-To really see how good your implementation is, we encourage you to compare your performance against that of popular DNN frameworks like TensorFlow or MX.net.
 
 # Assignment mechanics #
 
@@ -53,7 +45,7 @@ To build the starter code, run `make` from the top level directory. The assignme
 
 To install and use Halide follow the instructions at http://halide-lang.org/. In particular, you should [download a binary release of Halide](https://github.com/halide/Halide/releases). Once you've downloaded and untar'd the release, say into directory `halide_dir`, change the previous lines back, and also the following line in `Makefile`
 
-    HALIDE_DIR=/Users/setaluri/halide
+    HALIDE_DIR=/Users/kayvonf/halide
 
 to
 
@@ -84,7 +76,4 @@ Your modifications to the code should only go in files `fast_convolution_layer.h
     
     // END: CS348K STUDENTS MODIFY THIS CODE
 
-If you need to make changes to the build system (e.g. add g++ flags to get vector intrinsics working) _please make a note of it in your submission_.
-
-We have provided a reference implementation in `halide_convolution_layer.cpp`. You can use any of the code in these files for your implementation. In particular,
-you can copy the Halide algorithm (and just provide a custom schedule).
+We have provided a reference implementation in `halide_convolution_layer.cpp`. You can use any of the code in these files for your implementation. In particular, you can copy the Halide algorithm (and just provide a custom schedule).
