@@ -18,7 +18,7 @@ public:
 
     void generate() {
       Halide::Func f_in_bound;
-      f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, 0, params.width, 0, params.height, 0, params.channels, 0, params.n);
+      f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, 0, in_func.width(), 0, in_func.height(), 0, in_func.channels(), 0, params.n);
 
       // Add these as generator parameters?
       Halide::RDom r(0, f_w, 0, f_h, 0, params.channels);
