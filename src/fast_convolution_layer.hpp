@@ -19,11 +19,11 @@ class FastConvolutionLayer : public ConvolutionLayer {
   void Run(Parameters params, Data data) override;
 
  private:
-  // BEGIN: CS348V STUDENTS MODIFY THIS CODE
+  // BEGIN: CS348K STUDENTS MODIFY THIS CODE
   // You are free to add any internal functions or members to help your
   // implementation. In particular, you are allowed to store any temporary
   // variables you need in Run() as private members.
-  // END: CS348V STUDENTS MODIFY THIS CODE
+  // END: CS348K STUDENTS MODIFY THIS CODE
 };
 
 #endif  // FAST_CONVOLUTION_LAYER_HPP_
