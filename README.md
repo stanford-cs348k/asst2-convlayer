@@ -3,7 +3,7 @@
 In this assignment you will implement optimize the performance of code to evaluate a convolutional layer in a DNN. 
 Implementing a conv layer [is easy](http://cs348k.stanford.edu/spring20/lecture/dnneval/slide_024) (we give you the algorithm in Halide in the starter code). The challenge is implementing the layer efficiently using the techniques described in class, such as SIMD vector processing, multi-core execution, and efficient blocking for cache locality. 
 
-**You are allowed to use the reference Halide algorithm provided in the codebase verbatim** (see `StudentConvLayerGenerator` in `conv_layer_generators.cpp`). However, to improve the performance you will need to write an efficient Halide schedule. The starter code uses a naive/default Halide schedule, which corresponds to an evaluate order equivalent to code with loops that look like:
+**You are allowed to use the reference Halide algorithm provided in the codebase verbatim** (see `StudentConvLayerGenerator` in `conv_layer_generators.cpp`). However, to improve the performance you will need to write an efficient Halide schedule. The starter code uses a naive/default Halide schedule, which corresponds to an evaluation order equivalent to code with loops that look like:
 
 ```
   // Initialization
