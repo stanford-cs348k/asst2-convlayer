@@ -17,12 +17,16 @@ CXXFLAGS := -std=c++11 -g
 
 CXX ?= g++
 
+# Ignore this field unless you have dynamic loading problems
+# on mac
+ORIGINAL_HALIDE_PATH := leave/blank/if/you/dont/have/dyload/problems
+
 convlayer: $(OBJ_FILES) $(BUILD_DIR)/DefaultConvLayerGenerator.a $(BUILD_DIR)/StudentConvLayerGenerator.a $(BUILD_DIR)/AutoConvLayerGenerator.a
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $^ $(LDFLAGS) -o $(BIN_DIR)/$@
-#ifeq ($(UNAME), Darwin)
-	#install_name_tool -change @rpath/libHalide.dylib $(HALIDE_DIR)/bin/libHalide.dylib $(BIN_DIR)/$@
-#endif
+ifeq ($(UNAME), Darwin)
+	install_name_tool -change $(ORIGINAL_HALIDE_PATH)/libHalide.dylib $(HALIDE_DIR)/bin/libHalide.dylib $(BIN_DIR)/$@
+endif
 
 clean:
 	\rm -rf $(BUILD_DIR) $(BIN_DIR)
