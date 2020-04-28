@@ -1,9 +1,12 @@
 SRC_DIR := src
+
 HALIDE_DIR=/Users/dillon/CppWorkspace/Halide/
 BUILD_DIR := build
 BIN_DIR := bin
+
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
+
 INCLUDES := -I$(HALIDE_DIR)/include
 DEFINES := -DUSE_HALIDE
 LDFLAGS := -L$(HALIDE_DIR)/bin -lHalide -ldl -lpthread

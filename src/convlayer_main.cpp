@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
   fast_data.input = data.input;
   fast_data.output = FillZero(params.width*params.height*params.n*params.num_f);
 
-  {
+  if (schedule == "default") {
     std::unique_ptr<ConvolutionLayer> reference_conv_layer(new HalideConvolutionLayer);
     reference_conv_layer->Init(params);
 
@@ -99,6 +99,14 @@ int main(int argc, char** argv) {
     std::chrono::duration<double> elapsed = end - start;
     total_elapsed += elapsed.count();
     std::cout << "Reference Convolution layer took " << elapsed.count() << " secconds" << std::endl;
+  } else if (schedule == "student") {
+
+  } else if (schedule == "auto") {
+    cout << "Autoscheduled conv not yet implemented" << endl;
+    assert(false);
+  } else {
+    cout << "Error: Unsupported schedule \"" << schedule << "\", options are \"default\", \"auto\", \"student\"" << endl;
+    assert(false);
   }
 
 
