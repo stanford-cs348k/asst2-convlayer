@@ -1,4 +1,4 @@
-# CS348K (Mini-) Assignment 2: Optimizing a Convolutional Layer in Halide #
+# CS348K (Mini-) Assignment 2: <br/> Optimizing a Convolutional Layer in Halide #
 
 In this assignment you will implement optimize the performance of code to evaluate a convolutional layer in a DNN. 
 Implementing a conv layer [is easy](http://cs348k.stanford.edu/spring20/lecture/dnneval/slide_024) (we give you the algorithm in Halide in the starter code). The challenge is implementing the layer efficiently using the techniques described in class, such as SIMD vector processing, multi-core execution, and efficient blocking for cache locality. 
