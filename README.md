@@ -1,5 +1,7 @@
 # CS348K (Mini-) Assignment 2: <br/> Optimizing a Convolutional Layer in Halide #
 
+__Due 11:59pm, Tuesday May 5th__
+
 In this assignment you will create an efficient schedule a DNN convolution layer in Halide. 
 Implementing the *Halide algorithm* for a conv layer [is quite easy](http://cs348k.stanford.edu/spring20/lecture/dnneval/slide_024) (we give you the algorithm in Halide in the starter code). The challenge is coming up with an efficient schedule. Good schedules will use a combination of ideas discussed in class, such as: SIMD vector processing, multi-core execution, and efficient blocking for cache locality. 
 
