@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
   int f_h = 3;
 
   args::ArgumentParser parser("Runs the scheduled convolution layer.", "");
-  args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
+  args::HelpFlag help(parser, "help", "Display this help menu", {'H', "help"});
 
   args::ValueFlag<std::string> schedule_algorithm(parser, "schedule algorithm", "The algorithm used to schedule the convolution. Legal values are auto, student, and default", {'s', "schedule"});
 

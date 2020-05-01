@@ -39,7 +39,7 @@ __Running the starter code:__
 
 To get commandline help, run the command:
 
-    ./bin/convlayer -h
+    ./bin/convlayer --help
 
 To run your scheduled conv layer try:
 
