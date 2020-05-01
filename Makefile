@@ -4,7 +4,7 @@ UNAME = $(shell uname)
 
 # Note to CS348K students: this is the location of your Halide
 # installation on your machine.
-HALIDE_DIR=/MY/PATH/TO/HALIDE/
+HALIDE_DIR=/Users/dillon/CppWorkspace/Halide
 
 # Note to CS348K students: On some OSX platforms we need to patch up
 # the dyld path in the generated lib.  This value is being set to the
@@ -39,7 +39,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)/DefaultConvLayerGenerator.a $(BU
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEFINES) $(INCLUDES) -c -o $@ $<
 
 
-conv_layer_generator:
+conv_layer_generator: conv_layer_generators.cpp
 	$(CXX) conv_layer_generators.cpp $(HALIDE_DIR)/tools/GenGen.cpp -g -std=c++11 -fno-rtti -I $(HALIDE_DIR)/include -L $(HALIDE_DIR)/bin -lHalide -lpthread -ldl -o conv_layer_generator
 # Note to CS348K students: uncomment this code if you have dyload problems on mac
 # and then set ORIGINAL_HALIDE_DYLIB_PATH based on the results of `otool -L conv_layer_generator`
