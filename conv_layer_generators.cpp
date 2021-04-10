@@ -18,7 +18,7 @@ public:
       const int pad = 2;
 
       Halide::Func f_in_bound;
-      f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, 0, in_func.width(), 0, in_func.height(), 0, in_func.channels(), 0, in_func.dim(3).extent());
+      f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, {{0, in_func.width()}, {0, in_func.height()}, {0, in_func.channels()}, {0, in_func.dim(3).extent()}});
 
       // Add these as generator parameters?
       Halide::RDom r(0, W.width(), 0, W.height(), 0, W.channels());
@@ -53,7 +53,7 @@ public:
       Halide::Func f_in_bound;
 
       // set up boundary conditions. Halide will take care of boundary conditions on accesses to f_in_bound. 
-      f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, 0, in_func.width(), 0, in_func.height(), 0, in_func.channels(), 0, in_func.dim(3).extent());
+      f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, {{0, in_func.width()}, {0, in_func.height()}, {0, in_func.channels()}, {0, in_func.dim(3).extent()}});
 
       // reduction domain.  
       Halide::RDom r(0, W.width(), 0, W.height(), 0, W.channels());
@@ -100,7 +100,7 @@ public:
       Halide::Func f_in_bound;
 
       // set up boundary conditions. Halide will take care of boundary conditions on accesses to f_in_bound. 
-      f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, 0, in_func.width(), 0, in_func.height(), 0, in_func.channels(), 0, in_func.dim(3).extent());
+      f_in_bound = Halide::BoundaryConditions::repeat_edge(in_func, {{0, in_func.width()}, {0, in_func.height()}, {0, in_func.channels()}, {0, in_func.dim(3).extent()}});
 
       // reduction domain.  
       Halide::RDom r(0, W.width(), 0, W.height(), 0, W.channels());
