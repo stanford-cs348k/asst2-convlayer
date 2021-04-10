@@ -6,11 +6,8 @@ UNAME = $(shell uname)
 # installation on your machine.
 # You can use Halide 10 or 11.
 HALIDE_DIR=/PATH/TO/Halide-10.0.0-x86-64-linux
-
-# Note to CS348K students: On some OSX platforms we need to patch up
-# the dyld path in the generated lib.  This value is being set to the
-# default that is in the Halide binary as downloaded in April 2020.
-ORIGINAL_HALIDE_DYLIB_PATH := /Users/halidenightly/build_bot_new/worker/mac-64-800/halide-build/bin
+# Uncomment the below line OSX only
+MAC_LIBRARY_PATH := DYLD_LIBRARY_PATH=$(HALIDE_DIR)/lib/
 
 BUILD_DIR := build
 BIN_DIR := bin
@@ -51,13 +48,13 @@ conv_layer_generator: conv_layer_generators.cpp
 
 $(BUILD_DIR)/StudentConvLayerGenerator.a: conv_layer_generator
 	@mkdir -p $(BUILD_DIR)
-	./conv_layer_generator -g StudentConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=false
+	$(MAC_LIBRARY_PATH) ./conv_layer_generator -g StudentConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=false
 
 $(BUILD_DIR)/DefaultConvLayerGenerator.a: conv_layer_generator
 	@mkdir -p $(BUILD_DIR)
-	./conv_layer_generator -g DefaultConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=false
+	$(MAC_LIBRARY_PATH) ./conv_layer_generator -g DefaultConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=false
 
 
 $(BUILD_DIR)/AutoConvLayerGenerator.a: conv_layer_generator
 	@mkdir -p $(BUILD_DIR)
-	./conv_layer_generator -g AutoConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=true -p $(HALIDE_DIR)/lib/libautoschedule_mullapudi2016.so
+	$(MAC_LIBRARY_PATH) ./conv_layer_generator -g AutoConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=true -p $(HALIDE_DIR)/lib/libautoschedule_mullapudi2016.so
