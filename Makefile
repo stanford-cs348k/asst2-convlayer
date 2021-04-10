@@ -6,7 +6,8 @@ UNAME = $(shell uname)
 # installation on your machine.
 # You can use Halide 10 or 11.
 HALIDE_DIR=/PATH/TO/Halide-10.0.0-x86-64-linux
-# Uncomment the below line OSX only
+# The below line fixes the linker path on OSX and sets a
+# harmless variable on Linux
 MAC_LIBRARY_PATH := DYLD_LIBRARY_PATH=$(HALIDE_DIR)/lib/
 
 BUILD_DIR := build
