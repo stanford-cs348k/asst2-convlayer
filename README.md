@@ -23,9 +23,9 @@ Object files and binaries will be populated in `build/` and `bin/` respectively.
 
 To install and use Halide follow the instructions at http://halide-lang.org/. In particular, you should [download a binary release of Halide](https://github.com/halide/Halide/releases). You do not need to install Halide from source. We recommend version 11, but version 10 is also acceptable for this assignment. You may need version 10 if you're using an OS like Ubuntu 18.04 with an older version of glibc. 
 
-Once you've downloaded and untar'd the release, say into directory `halide_dir`, change the previous lines back, and also the following line in `Makefile`
+Once you've downloaded and untar'd the release, say into directory `halide_dir`, change the following line in `Makefile`
 
-    HALIDE_DIR=/MY/PATH/TO/HALIDE
+    HALIDE_DIR=/PATH/TO/Halide-11.0.1-x86-64-linux
 
 to
 
