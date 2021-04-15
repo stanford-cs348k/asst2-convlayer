@@ -97,7 +97,7 @@ We have provided a reference implementation in `conv_layer_generators.cpp` calle
                 conv(...) = ...
 ```
 
-Your job is to implement a custom Halide schedule that performs better than the default. (See [`Halide::Func::print_loop_nest()`](http://halide-lang.org/docs/class_halide_1_1_func.html#a365488c2eaf769c61635120773e541e1) to inspect and debug your schedule like this.)
+Your job is to implement a custom Halide schedule that performs better than the default. (See [`Halide::Func::print_loop_nest()`](https://halide-lang.org/docs/class_halide_1_1_func.html#a03f839d9e13cae4b87a540aa618589ae) to inspect and debug your schedule like this.)
 
 You may wish to consider:
 * Parallelization onto multiple CPU cores (`.parallel()`)    
