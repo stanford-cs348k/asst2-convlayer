@@ -7,6 +7,8 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <fstream>
+#include <string>
 #include "convolution_layer.hpp"
 #include "default_convolution_layer.hpp"
 #include "student_convolution_layer.hpp"
@@ -152,6 +154,7 @@ int main(int argc, char** argv) {
   data.input = FillRandom(params.width*params.height*params.channels*params.n);
   data.output = FillZero(params.width*params.height*params.n*params.num_f);
 
+
   if (schedule == "default") {
     std::unique_ptr<ConvolutionLayer> reference_conv_layer(new DefaultConvolutionLayer);
     reference_conv_layer->Init(params);
@@ -212,6 +215,18 @@ int main(int argc, char** argv) {
     cout << "Error: Unsupported schedule \"" << schedule << "\", options are \"default\", \"auto\", \"student\"" << endl;
     assert(false);
   }
+
+  fstream output_file;
+  output_file.open(schedule + ".txt", ios::out | ios::trunc);
+  std::cout << "writing to file " << schedule + ".txt" << std::endl;
+
+  for (size_t i = 0; i < params.width*params.height*params.n*params.num_f; i++) {
+      if (i != 0) {
+          output_file << ",";
+      }
+      output_file << data.output[i];
+  }
+  output_file.close();
 
 
   delete[] data.input;
