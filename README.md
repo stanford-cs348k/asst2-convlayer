@@ -58,7 +58,7 @@ and on Linux it will be:
 
 __Modifying the code__
 
-Programming in Halide is a form of [meta-programming]https://en.wikipedia.org/wiki/Metaprogramming().  Halide is embedded in C++, so you write C++ code that calls the Halide API to build up a DAG of Halide operations (a Halide program representation).  Then Halide compiles this representation into a library, which is linked by the binary `convlayer.`.  
+Programming in Halide is a form of [meta-programming](https://en.wikipedia.org/wiki/Metaprogramming).  Halide is embedded in C++, so you write C++ code that calls the Halide API to build up a DAG of Halide operations (a Halide program representation).  Then Halide compiles this representation into a library, which is linked by the binary `convlayer.`.  
 
 In the code base, a generator is a C++ class that creates a Halide program.  Your modifications to the code should only go in the file `conv_layer_generators.cpp` inside the class `StudentConvLayerGenerator`. Inside that file you should not modify the implementation of the convolution layer algorithm. You should only add Halide scheduling directives to the program to make it run faster. Regions you should modify will be marked by comments that look like so:
 
