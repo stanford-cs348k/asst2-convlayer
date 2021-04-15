@@ -1,6 +1,6 @@
 # CS348K (Mini-) Assignment 2: <br/> Optimizing a Convolutional Layer in Halide #
 
-__Due 11:59pm, Tuesday May 5th__
+__Due 11:59pm, April 27th__
 
 In this assignment you will create an efficient schedule a DNN convolution layer in Halide. 
 Implementing the *Halide algorithm* for a conv layer [is quite easy](http://cs348k.stanford.edu/spring20/lecture/dnneval/slide_024) (we give you the algorithm in Halide in the starter code). The challenge is coming up with an efficient schedule. Good schedules will use a combination of ideas discussed in class, such as: SIMD vector processing, multi-core execution, and efficient blocking for cache locality. 
@@ -47,7 +47,7 @@ To run your scheduled conv layer try:
 
     ./bin/convlayer --schedule student
 
-This code will run your version of the convolution layer using randomly generated inputs and weights. It will run for 3 trials, and report the minimum time of the 3 runs. To run correctly you must ensure that
+This code will run your version of the convolution layer using randomly generated inputs and weights. It will run for three trials, and report the minimum time of the three runs. To run correctly you must ensure that
 Halide is in your library load path. On OSX this can be done like so:
 
     DYLD_LIBRARY_PATH=<halide_dir>/bin ./bin/convlayer <args>
@@ -58,7 +58,7 @@ and on Linux it will be:
 
 __Modifying the code__
 
-Programming in Halide is a form of [meta-programming]https://en.wikipedia.org/wiki/Metaprogramming().  Halide is embedded in C++, so you write C++ code that in turn generates a Halide program representation.  Then Halide compiles this representation into a library, which is linked by the binary `convlayer.`.  
+Programming in Halide is a form of [meta-programming]https://en.wikipedia.org/wiki/Metaprogramming().  Halide is embedded in C++, so you write C++ code that calls the Halide API to build up a DAG of Halide operations (a Halide program representation).  Then Halide compiles this representation into a library, which is linked by the binary `convlayer.`.  
 
 In the code base, a generator is a C++ class that creates a Halide program.  Your modifications to the code should only go in the file `conv_layer_generators.cpp` inside the class `StudentConvLayerGenerator`. Inside that file you should not modify the implementation of the convolution layer algorithm. You should only add Halide scheduling directives to the program to make it run faster. Regions you should modify will be marked by comments that look like so:
 
@@ -106,9 +106,9 @@ You may wish to consider:
 
 Your handin should contain two components:
    * Your full source tree (as a zip file). Please make sure you `make clean` prior to zipping.
-   * A writeup, in a file named `writeup.pdf`, that describes the iterative process you used to arrive at your solution.  At each step, we expect the writeup to say:
+   * __A writeup, in a file named `writeup.pdf`, that describes the iterative process you used to arrive at your solution.__  At each step, we expect the writeup to say:
        * I tried XXX for the following reason.
        * Then I measured my performance and I saw an increase/decrease, etc.
        
-This assignment is all about performance optimization, but we are not grading on the actual performance obtained.  We are grading on a three category basis: no-credit, credit, amazing.  Anyone would makes a legimate effort to optimized the code should get credit.  Just please make sure your handin writeup properly described your process.  Students that obtain impressively high performance will get "amazing"!
+This assignment is all about performance optimization, but we are not grading on the actual performance obtained.  We are grading on a three category basis: no-credit, credit, amazing.  Anyone would makes a legimate effort to optimized the code should get credit.  Just please make sure your handin writeup properly describes your process.  Students that obtain impressively high performance will get the grade "amazing"!
 
