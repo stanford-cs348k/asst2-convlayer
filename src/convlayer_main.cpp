@@ -218,7 +218,7 @@ int main(int argc, char** argv) {
 
   fstream output_file;
   output_file.open(schedule + ".txt", ios::out | ios::trunc);
-  std::cout << "writing to file " << schedule + ".txt" << std::endl;
+  std::cout << "writing to output file " << schedule + ".txt" << std::endl;
 
   for (size_t i = 0; i < params.width*params.height*params.n*params.num_f; i++) {
       if (i != 0) {
