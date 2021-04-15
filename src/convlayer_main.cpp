@@ -56,6 +56,7 @@ int main(int argc, char** argv) {
   int num_f = 256;
   int f_w = 3;
   int f_h = 3;
+  bool print_output = false;
 
   args::ArgumentParser parser("Runs the scheduled convolution layer.", "");
   args::HelpFlag help(parser, "help", "Display this help menu", {'H', "help"});
@@ -70,6 +71,7 @@ int main(int argc, char** argv) {
   args::ValueFlag<int> num_filters_arg(parser, "num filters", "The number of filters applied to each image.", {"num-filters"});
   args::ValueFlag<int> filter_width_arg(parser, "filter width", "The filter width.", {"filter-width"});
   args::ValueFlag<int> filter_height_arg(parser, "filter height", "The filter height.", {"filter-height"});
+  args::Flag print_output_arg(parser, "print outputs", "Enable output printing.", {'p', "print-outputs"});
 
   try
   {
@@ -123,6 +125,10 @@ int main(int argc, char** argv) {
 
   if (filter_height_arg) {
     f_h = get(filter_height_arg);
+  }
+
+  if (print_output_arg) {
+    print_output = true;
   }
 
   cout << "Schedule     : " << schedule << endl;
@@ -216,17 +222,19 @@ int main(int argc, char** argv) {
     assert(false);
   }
 
-  fstream output_file;
-  output_file.open(schedule + ".txt", ios::out | ios::trunc);
-  std::cout << "writing to output file " << schedule + ".txt" << std::endl;
+  if (print_output) {
+    fstream output_file;
+    output_file.open(schedule + ".txt", ios::out | ios::trunc);
+    std::cout << "writing to output file " << schedule + ".txt" << std::endl;
 
-  for (size_t i = 0; i < params.width*params.height*params.n*params.num_f; i++) {
-      if (i != 0) {
-          output_file << ",";
-      }
-      output_file << data.output[i];
+    for (size_t i = 0; i < params.width*params.height*params.n*params.num_f; i++) {
+        if (i != 0) {
+            output_file << ",";
+        }
+        output_file << data.output[i];
+    }
+    output_file.close();
   }
-  output_file.close();
 
 
   delete[] data.input;
