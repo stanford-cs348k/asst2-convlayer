@@ -37,6 +37,38 @@ __Step 3: Build the code:__
 
 This creates a binary `bin/convlayer`.
 
+You will see the following output when building the code:
+
+```
+(base) durst@myth55:~/private/cs348k/asst2-convlayer$ make
+g++ conv_layer_generators.cpp /afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/share/Halide/tools/GenGen.cpp -g -std=c++11 -fno-rtti -I/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/include -I./build -L/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/bin -L/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/lib -L./build -lHalide -ldl -lpthread -o conv_layer_generator
+#install_name_tool -change /libHalide.dylib /afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/bin/libHalide.dylib conv_layer_generator
+DYLD_LIBRARY_PATH=/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/lib/ ./conv_layer_generator -g DefaultConvLayerGenerator -o ./build target=host auto_schedule=false
+DYLD_LIBRARY_PATH=/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/lib/ ./conv_layer_generator -g StudentConvLayerGenerator -o ./build target=host auto_schedule=false
+Loop nests...
+produce forward:
+  for v3:
+    for v2:
+      for v1:
+        for v0:
+          forward(...) = ...
+  for v3:
+    for v2:
+      for v1:
+        for v0:
+          for r21:
+            for r21:
+              for r21:
+                forward(...) = ...
+DYLD_LIBRARY_PATH=/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/lib/ ./conv_layer_generator -g AutoConvLayerGenerator -o ./build target=host auto_schedule=true -p /afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/lib/libautoschedule_mullapudi2016.so
+Warning: Outer dim vectorization of var "v0" in function "forward.update(0)"
+g++  -std=c++11 -g -O3 -DUSE_HALIDE -I/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/include -I./build -c -o build/auto_convolution_layer.o src/auto_convolution_layer.cpp
+g++  -std=c++11 -g -O3 -DUSE_HALIDE -I/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/include -I./build -c -o build/default_convolution_layer.o src/default_convolution_layer.cpp
+g++  -std=c++11 -g -O3 -DUSE_HALIDE -I/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/include -I./build -c -o build/student_convolution_layer.o src/student_convolution_layer.cpp
+g++  -std=c++11 -g -O3 -DUSE_HALIDE -I/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/include -I./build -c -o build/convlayer_main.o src/convlayer_main.cpp
+g++ build/auto_convolution_layer.o build/default_convolution_layer.o build/student_convolution_layer.o build/convlayer_main.o build/DefaultConvLayerGenerator.a build/StudentConvLayerGenerator.a build/AutoConvLayerGenerator.a -L/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/bin -L/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/lib -L./build -lHalide -ldl -lpthread -o bin/convlayer
+```
+
 __Running the starter code:__
 
 To get commandline help, run the command:
@@ -64,6 +96,33 @@ Note that the auto-scheduler is currently optimizing assuming the input dimensio
 You can also use "default" to get the default Halide schedule. 
 
     ./bin/convlayer --schedule default
+
+You will see the following output when building the code:
+
+```
+(base) durst@myth55:~/private/cs348k/asst2-convlayer$ LD_LIBRARY_PATH=/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/lib ./bin/convlayer --schedule auto
+Schedule     : auto
+width        : 128
+height       : 128
+channels     : 3
+batch size   : 16
+num filters  : 256
+filter width : 3
+filter height: 3
+
+Auto-scheduler convolution layer:0.195922 seconds
+(base) durst@myth55:~/private/cs348k/asst2-convlayer$ LD_LIBRARY_PATH=/afs/.ir/users/d/u/durst/private/cs348k/Halide-11.0.1-x86-64-linux/lib ./bin/convlayer --schedule student
+Schedule     : student
+width        : 128
+height       : 128
+channels     : 3
+batch size   : 16
+num filters  : 256
+filter width : 3
+filter height: 3
+
+Student schedule convolution layer: 2.5546 seconds
+```
 
 __Modifying the code__
 
