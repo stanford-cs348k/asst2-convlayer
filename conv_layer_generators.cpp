@@ -114,9 +114,9 @@ public:
       // Autoschedule
       if (auto_schedule) {
         in_func.set_estimates({{0, 128}, {0, 128}, {0, 3}, {0, 16}});
-        b.set_estimates({{0, 3}});
+        b.set_estimates({{0, 256}});
         W.set_estimates({{0, 3}, {0, 3}, {0, 3}, {0, 256}});
-        forward.set_estimates({{0, 128}, {0, 128}, {0, 3}, {0, 16}});
+        forward.set_estimates({{0, 128}, {0, 128}, {0, 256}, {0, 16}});
       }
     }
 };
