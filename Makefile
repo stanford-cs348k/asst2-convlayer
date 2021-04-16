@@ -5,7 +5,7 @@ UNAME = $(shell uname)
 # Note to CS348K students: this is the location of your Halide
 # installation on your machine.
 # You can use Halide 10 or 11.
-HALIDE_DIR=/home/durst/big_dev/cs348k/halide/Halide-10.0.0-x86-64-linux
+HALIDE_DIR=/PATH/TO/Halide-11.0.1-x86-64-linux
 # The below line fixes the linker path on OSX and sets a
 # harmless variable on Linux
 MAC_LIBRARY_PATH := DYLD_LIBRARY_PATH=$(HALIDE_DIR)/lib/
