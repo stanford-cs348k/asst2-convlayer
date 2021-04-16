@@ -48,8 +48,8 @@ float* FillRandom(const int size) {
 
 int main(int argc, char** argv) {
   string schedule = "default";
-  int width = 28;
-  int height = 28;
+  int width = 128;
+  int height = 128;
   int channels = 3;
   int n = 16;
 
