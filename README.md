@@ -97,7 +97,7 @@ You can also use "default" to get the default Halide schedule.
 
     ./bin/convlayer --schedule default
 
-You will see the following output when building the code:
+You will see the following output when running the code:
 
 ```
 (base) durst@myth55:~/cs348k/asst2-convlayer$ LD_LIBRARY_PATH=/afs/.ir/users/d/u/durst/cs348k/Halide-11.0.1-x86-64-linux/lib ./bin/convlayer --schedule auto
