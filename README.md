@@ -95,7 +95,7 @@ You can also use "default" to get the default Halide schedule.
 
     ./bin/convlayer --schedule default
 
-Here is the example output from two different program runs on myth.  Notice that the autoscheduler produces a schedule that is about 10 times faster than the default schedule.
+Here is output from two different program runs on myth.  Notice that the autoscheduler produces a schedule that is about 10 times faster than the default schedule.
 
 ```
 (base) durst@myth55:~/cs348k/asst2-convlayer$ LD_LIBRARY_PATH=/afs/.ir/users/d/u/durst/cs348k/Halide-11.0.1-x86-64-linux/lib ./bin/convlayer --schedule auto
