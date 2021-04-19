@@ -8,7 +8,7 @@ UNAME = $(shell uname)
 HALIDE_DIR=/PATH/TO/Halide-11.0.1-x86-64-linux
 # The below line fixes the linker path on OSX and sets a
 # harmless variable on Linux
-MAC_LIBRARY_PATH := DYLD_LIBRARY_PATH=$(HALIDE_DIR)/lib/
+LIBRARY_PATH := DYLD_LIBRARY_PATH=$(HALIDE_DIR)/lib/ LD_LIBRARY_PATH=$(HALIDE_DIR)/lib/
 
 BUILD_DIR := build
 BIN_DIR := bin
@@ -19,7 +19,6 @@ OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 INCLUDES := -I$(HALIDE_DIR)/include -I./$(BUILD_DIR)
 DEFINES := -DUSE_HALIDE
 LDFLAGS := -L$(HALIDE_DIR)/bin -L$(HALIDE_DIR)/lib -L./$(BUILD_DIR) -lHalide -ldl -lpthread
-LD_LIBRARY_PATH := $(HALIDE_DIR)/lib
 CPPFLAGS :=
 CXXFLAGS := -std=c++11 -g -O3
 
@@ -49,13 +48,13 @@ conv_layer_generator: conv_layer_generators.cpp
 
 $(BUILD_DIR)/StudentConvLayerGenerator.a: conv_layer_generator
 	@mkdir -p $(BUILD_DIR)
-	$(MAC_LIBRARY_PATH) ./conv_layer_generator -g StudentConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=false
+	$(LIBRARY_PATH) ./conv_layer_generator -g StudentConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=false
 
 $(BUILD_DIR)/DefaultConvLayerGenerator.a: conv_layer_generator
 	@mkdir -p $(BUILD_DIR)
-	$(MAC_LIBRARY_PATH) ./conv_layer_generator -g DefaultConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=false
+	$(LIBRARY_PATH) ./conv_layer_generator -g DefaultConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=false
 
 
 $(BUILD_DIR)/AutoConvLayerGenerator.a: conv_layer_generator
 	@mkdir -p $(BUILD_DIR)
-	$(MAC_LIBRARY_PATH) ./conv_layer_generator -g AutoConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=true -p $(HALIDE_DIR)/lib/libautoschedule_mullapudi2016.so
+	$(LIBRARY_PATH) ./conv_layer_generator -g AutoConvLayerGenerator -o ./$(BUILD_DIR) target=host auto_schedule=true -p $(HALIDE_DIR)/lib/libautoschedule_mullapudi2016.so
