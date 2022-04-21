@@ -11,33 +11,35 @@ In general, this is a free-for-all assignment.  We want to you learn a bit about
 
 __Step 1: Grab the assignment starter code:__
 
-    git clone git@github.com:stanford-cs348k/asst2-convlayer.git
+    git clone https://github.com/stanford-cs348k/asst2-convlayer.git
    
 The codebase uses a simple `Makefile` as the build system. However, there is a dependency on Halide.  
 
 __Step 2: Install Halide:__
 
-To build the starter code, run `make` from the top level directory. The driver source code is in `src/`, and
-the implementation of the convolution layer generator you will modify is in the top-level file `conv_layer_generators.cpp`.
-Object files and binaries will be populated in `build/` and `bin/` respectively.
-
 To install and use Halide follow the instructions at http://halide-lang.org/. In particular, you should [download a binary release of Halide](https://github.com/halide/Halide/releases). You do not need to install Halide from source. We recommend version 14, but older versions should also be acceptable for this assignment, if you're using an old linux distribution that lacks an up-to-date glibc. Make sure you select the correct OS and architecture for your device: a linux user with an Intel or AMD CPU should download `Halide-14.0.0-x86_64-HASH.tar.gz` for example, while a user of a new M1 Mac should download `Halide-14.0.0-arm-64-osx-HASH.tar.gz`. Additionally, macOS users should ensure that they download the release tarball via the terminal, rather than their browser. When downloading the tarball via browser, macOS marks all the shared libraries inside as untrusted, and will stop the Halide compiler from loading them when building the project. Therefore use curl as follows:
 
     curl -OJL <TARBALL_URL_FROM_RELEASE_PAGE>
 
+Once you've downloaded the release, extract the tarball as follows (replacing `<TARBALL_PATH>` with the path to the downloaded tarball).
+
+    tar -xvf <TARBALL_PATH>
+
 Once you've downloaded and untar'd the release, say into directory `my_halide_dir`, change the line in the `Makefile` that looks like this
 
-    HALIDE_DIR=/PATH/TO/Halide-14.0.0-ARCH-OS
+    HALIDE_DIR ?= /PATH/TO/Halide-14.0.0-ARCH-OS
 
 to
 
-    HALIDE_DIR=<my_halide_dir>
+    HALIDE_DIR = <my_halide_dir>
 
 __Step 3: Build the code:__
 
-    make
+To build the starter code, run `make` from the top level directory. The driver source code is in `src/`, and
+the implementation of the convolution layer generator you will modify is in the top-level file `conv_layer_generators.cpp`.
+Object files and binaries will be populated in `build/` and `bin/` respectively.
 
-This creates a binary `bin/convlayer`.
+When complete, this will create a binary `bin/convlayer`.
 
 You will see the following output when building the code:
 

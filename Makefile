@@ -4,7 +4,7 @@ UNAME = $(shell uname)
 
 # Note to CS348K students: this is the location of your Halide
 # installation on your machine.
-HALIDE_DIR=/PATH/TO/Halide-14.0.0-ARCH-OS
+HALIDE_DIR ?= /PATH/TO/Halide-14.0.0-ARCH-OS
 
 BUILD_DIR := build
 BIN_DIR := bin
@@ -19,7 +19,6 @@ CPPFLAGS :=
 CXXFLAGS := -std=c++17 -g -O3
 
 CXX ?= g++
-
 
 convlayer: $(OBJ_FILES) $(BUILD_DIR)/DefaultConvLayerGenerator.a $(BUILD_DIR)/StudentConvLayerGenerator.a $(BUILD_DIR)/AutoConvLayerGenerator.a
 	@mkdir -p $(BIN_DIR)
