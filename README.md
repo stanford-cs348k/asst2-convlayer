@@ -92,7 +92,7 @@ You can also use "default" to get the default Halide schedule.
 
     ./bin/convlayer --schedule default
 
-Here is output from two different program runs on a M1 laptop.  Notice that the autoscheduler produces a schedule that is about 10 times faster than the default schedule.
+Here is output from two different program runs on a M1 Pro laptop.  Notice that the autoscheduler produces a schedule that is about 10 times faster than the default schedule.
 
 ```
 asst2-convlayer $ ./bin/convlayer --schedule auto
@@ -105,7 +105,7 @@ num filters  : 256
 filter width : 3
 filter height: 3
 
-Auto-scheduler convolution layer:0.195922 seconds
+Auto-scheduler convolution layer:0.128934 seconds
 asst2-convlayer $ ./bin/convlayer --schedule student
 Schedule     : student
 width        : 128
@@ -116,7 +116,7 @@ num filters  : 256
 filter width : 3
 filter height: 3
 
-Student schedule convolution layer: 2.5546 seconds
+Student schedule convolution layer: 1.63975 seconds
 ```
 
 __Modifying the code__
