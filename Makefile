@@ -5,7 +5,7 @@ UNAME = $(shell uname)
 # Note to CS348K students: this is the location of your Halide
 # installation on your machine.
 # You can use Halide 10 or 11.
-HALIDE_DIR=/PATH/TO/Halide-11.0.1-x86-64-linux
+HALIDE_DIR=/PATH/TO/Halide-14.0.0-ARCH-OS
 # The below line fixes the linker path on OSX and sets a
 # harmless variable on Linux
 LIBRARY_PATH := DYLD_LIBRARY_PATH=$(HALIDE_DIR)/lib/ LD_LIBRARY_PATH=$(HALIDE_DIR)/lib/
@@ -20,7 +20,7 @@ INCLUDES := -I$(HALIDE_DIR)/include -I./$(BUILD_DIR)
 DEFINES := -DUSE_HALIDE
 LDFLAGS := -L$(HALIDE_DIR)/bin -L$(HALIDE_DIR)/lib -L./$(BUILD_DIR) -lHalide -ldl -lpthread
 CPPFLAGS :=
-CXXFLAGS := -std=c++11 -g -O3
+CXXFLAGS := -std=c++17 -g -O3
 
 CXX ?= g++
 
@@ -39,7 +39,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)/DefaultConvLayerGenerator.a $(BU
 
 
 conv_layer_generator: conv_layer_generators.cpp
-	$(CXX) conv_layer_generators.cpp $(HALIDE_DIR)/share/Halide/tools/GenGen.cpp -g -std=c++11 -fno-rtti $(INCLUDES) $(LDFLAGS) -o conv_layer_generator
+	$(CXX) conv_layer_generators.cpp $(HALIDE_DIR)/share/Halide/tools/GenGen.cpp -g -std=c++17 -fno-rtti $(INCLUDES) $(LDFLAGS) -o conv_layer_generator
 # Note to CS348K students: uncomment this code if you have dyload problems on mac
 # and then set ORIGINAL_HALIDE_DYLIB_PATH based on the results of `otool -L conv_layer_generator`
 #ifeq ($(UNAME), Darwin)
