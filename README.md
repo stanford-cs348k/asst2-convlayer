@@ -29,7 +29,7 @@ Now that you've downloaded and untar'd the release, say into directory `my_halid
 
     HALIDE_DIR ?= /PATH/TO/Halide-14.0.0-ARCH-OS
 
-to
+to (without the `<>`)
 
     HALIDE_DIR = <my_halide_dir>
 
