@@ -25,7 +25,7 @@ Once you've downloaded the release, extract the tarball as follows (replacing `<
 
     tar -xvf <TARBALL_PATH>
 
-Once you've downloaded and untar'd the release, say into directory `my_halide_dir`, change the line in the `Makefile` that looks like this
+Now that you've downloaded and untar'd the release, say into directory `my_halide_dir`, change the line in the `Makefile` that looks like this
 
     HALIDE_DIR ?= /PATH/TO/Halide-14.0.0-ARCH-OS
 
