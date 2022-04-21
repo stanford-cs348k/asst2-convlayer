@@ -3,7 +3,7 @@
 __Due 11:59pm, April 29th__
 
 In this assignment you will create an efficient schedule for a DNN convolution layer in Halide. 
-Implementing the *Halide algorithm* for a conv layer [is quite easy](http://cs348k.stanford.edu/spring20/lecture/dnneval/slide_024) (we give you the algorithm in Halide in the starter code). The challenge is coming up with an efficient schedule. Good schedules will use a combination of ideas discussed in class, such as: SIMD vector processing, multi-core execution, and efficient blocking for cache locality. 
+Implementing the *Halide algorithm* for a conv layer [is quite easy](https://gfxcourses.stanford.edu/cs348k/spring22/lecture/dnninference/slide_13) (we give you the algorithm in Halide in the starter code). The challenge is coming up with an efficient schedule. Good schedules will use a combination of ideas discussed in class, such as: SIMD vector processing, multi-core execution, and efficient blocking for cache locality. 
 
 In general, this is a free-for-all assignment.  We want to you learn a bit about writing Halide schedules, and try your hand at making performance go faster.  You *will* have to do some Halide documentation reading on your own.
 
@@ -21,7 +21,7 @@ To build the starter code, run `make` from the top level directory. The driver s
 the implementation of the convolution layer generator you will modify is in the top-level file `conv_layer_generators.cpp`.
 Object files and binaries will be populated in `build/` and `bin/` respectively.
 
-To install and use Halide follow the instructions at http://halide-lang.org/. In particular, you should [download a binary release of Halide](https://github.com/halide/Halide/releases). You do not need to install Halide from source. We recommend version 14, but older versions should also be acceptable for this assignment, if you're using an old linux distribution that lacks an up-to-date glibc. Make sure you select the correct OS and architecture for your device: a linux user with an Intel or AMD CPU should download `Halide-14.0.0-x86\_64-6b9ed2afd1d6d0badf04986602c943e287d44e46.tar.gz` for example, while a user of a new M1 Mac should download `Halide-14.0.0-arm-64-osx-6b9ed2afd1d6d0badf04986602c943e287d44e46.tar.gz`. Additionally, macOS users should ensure that they download the release tarball via the terminal, rather than their browser. When downloading the tarball via browser, macOS marks all the shared libraries inside as untrusted, and will stop the Halide compiler from loading them when building the project. Therefore use curl as follows:
+To install and use Halide follow the instructions at http://halide-lang.org/. In particular, you should [download a binary release of Halide](https://github.com/halide/Halide/releases). You do not need to install Halide from source. We recommend version 14, but older versions should also be acceptable for this assignment, if you're using an old linux distribution that lacks an up-to-date glibc. Make sure you select the correct OS and architecture for your device: a linux user with an Intel or AMD CPU should download `Halide-14.0.0-x86_64-6b9ed2afd1d6d0badf04986602c943e287d44e46.tar.gz` for example, while a user of a new M1 Mac should download `Halide-14.0.0-arm-64-osx-6b9ed2afd1d6d0badf04986602c943e287d44e46.tar.gz`. Additionally, macOS users should ensure that they download the release tarball via the terminal, rather than their browser. When downloading the tarball via browser, macOS marks all the shared libraries inside as untrusted, and will stop the Halide compiler from loading them when building the project. Therefore use curl as follows:
 
     curl -OJL <TARBALL_URL_FROM_RELEASE_PAGE>
 
@@ -43,7 +43,7 @@ You will see the following output when building the code:
 
 ```
 (base) student@host:~/cs348k/asst2-convlayer$ make
-g++ conv_layer_generators.cpp <my_halide_dir>/share/Halide/tools/GenGen.cpp -g -std=c++11 -fno-rtti -I<my_halide_dir>/include -I./build -L<my_halide_dir>/bin -L<my_halide_dir>/lib -L./build -lHalide -ldl -lpthread -o conv_layer_generator
+g++ conv_layer_generators.cpp <my_halide_dir>/share/Halide/tools/GenGen.cpp -g -std=c++17 -fno-rtti -I<my_halide_dir>/include -I./build -L<my_halide_dir>/bin -L<my_halide_dir>/lib -L./build -lHalide -ldl -lpthread -o conv_layer_generator
 #install_name_tool -change /libHalide.dylib <my_halide_dir>/bin/libHalide.dylib conv_layer_generator
 DYLD_LIBRARY_PATH=<my_halide_dir>/lib/ ./conv_layer_generator -g DefaultConvLayerGenerator -o ./build target=host auto_schedule=false
 DYLD_LIBRARY_PATH=<my_halide_dir>/lib/ ./conv_layer_generator -g StudentConvLayerGenerator -o ./build target=host auto_schedule=false
@@ -64,10 +64,10 @@ produce forward:
                 forward(...) = ...
 DYLD_LIBRARY_PATH=<my_halide_dir>/lib/ ./conv_layer_generator -g AutoConvLayerGenerator -o ./build target=host auto_schedule=true -p <my_halide_dir>/lib/libautoschedule_mullapudi2016.so
 Warning: Outer dim vectorization of var "v0" in function "forward.update(0)"
-g++  -std=c++11 -g -O3 -DUSE_HALIDE -I<my_halide_dir>/include -I./build -c -o build/auto_convolution_layer.o src/auto_convolution_layer.cpp
-g++  -std=c++11 -g -O3 -DUSE_HALIDE -I<my_halide_dir>/include -I./build -c -o build/default_convolution_layer.o src/default_convolution_layer.cpp
-g++  -std=c++11 -g -O3 -DUSE_HALIDE -I<my_halide_dir>/include -I./build -c -o build/student_convolution_layer.o src/student_convolution_layer.cpp
-g++  -std=c++11 -g -O3 -DUSE_HALIDE -I<my_halide_dir>/include -I./build -c -o build/convlayer_main.o src/convlayer_main.cpp
+g++  -std=c++17 -g -O3 -DUSE_HALIDE -I<my_halide_dir>/include -I./build -c -o build/auto_convolution_layer.o src/auto_convolution_layer.cpp
+g++  -std=c++17 -g -O3 -DUSE_HALIDE -I<my_halide_dir>/include -I./build -c -o build/default_convolution_layer.o src/default_convolution_layer.cpp
+g++  -std=c++17 -g -O3 -DUSE_HALIDE -I<my_halide_dir>/include -I./build -c -o build/student_convolution_layer.o src/student_convolution_layer.cpp
+g++  -std=c++17 -g -O3 -DUSE_HALIDE -I<my_halide_dir>/include -I./build -c -o build/convlayer_main.o src/convlayer_main.cpp
 g++ build/auto_convolution_layer.o build/default_convolution_layer.o build/student_convolution_layer.o build/convlayer_main.o build/DefaultConvLayerGenerator.a build/StudentConvLayerGenerator.a build/AutoConvLayerGenerator.a -L<my_halide_dir>/bin -L<my_halide_dir>/lib -L./build -lHalide -ldl -lpthread -o bin/convlayer
 ```
 
@@ -130,7 +130,7 @@ Student schedule convolution layer: 2.5546 seconds
 
 __Modifying the code__
 
-Programming in Halide is a form of [meta-programming](https://en.wikipedia.org/wiki/Metaprogramming).  Halide is embedded in C++, so you write C++ code that calls the Halide API to build up a DAG of Halide operations (a Halide program representation).  Then Halide compiles this representation into a library, which is linked by the binary `convlayer.`.  
+Programming in Halide is a form of [meta-programming](https://en.wikipedia.org/wiki/Metaprogramming).  Halide is embedded in C++, so you write C++ code that calls the Halide API to build up a DAG of Halide operations (a Halide program representation).  Then Halide compiles this representation into a library, which is linked by the binary `convlayer`.  
 
 In the code base, a generator is a C++ class that creates a Halide program.  Your modifications to the code should only go in the file `conv_layer_generators.cpp` inside the class `StudentConvLayerGenerator`. Inside that file you **should not modify the implementation of the convolution layer algorithm.** You should only add Halide scheduling directives to the program to make it run faster. Regions you should modify will be marked by comments that look like this:
 
